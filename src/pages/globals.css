@@ -1,0 +1,63 @@
+:root{
+    --Primary_Color: #00BBF9;
+    --Mobile-Page-Padding: .5rem .3rem;
+  
+    --Button_Border_Radius: 5px;
+    --Navbar_Height: 3rem;
+    --Footer_Height: 4rem;
+  
+    --Rows_Margin: .5rem ;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+main{
+    padding: var(--Mobile-Page-Padding);
+    min-height: calc(100vh - var(--Navbar_Height) - var(--Footer_Height));
+}
+
+input, textarea{
+    border: none;
+}
+
+input[type=number] {
+    appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+nav{
+    padding: var(--Mobile-Page-Padding);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.warning{
+    background-color: #F3AF49 !important;
+}
+
+.good{
+    background-color: #A6D49F !important;
+}
+
+.select_shop_dropdown{
+    width: 30vw;
+    height: 2rem;
+}

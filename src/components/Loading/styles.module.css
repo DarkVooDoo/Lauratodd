@@ -1,0 +1,31 @@
+.loading{
+    --Dot_Dimension: 1.5rem;
+    --Animation_lenght: .7s;
+    min-height: calc(100vh - var(--Navbar_Height));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.loading_dot{
+    height: var(--Dot_Dimension);
+    width: var(--Dot_Dimension);
+    border-radius: 50%;
+    background-color: darkgray;
+}
+
+.loading_dot1{
+    animation: loading_animation var(--Animation_lenght) linear infinite alternate-reverse;
+}
+.loading_dot2{
+    animation: loading_animation var(--Animation_lenght) calc(var(--Animation_lenght) *.15)  linear infinite alternate-reverse;
+}
+.loading_dot3{
+    animation: loading_animation var(--Animation_lenght) calc(var(--Animation_lenght) *.30) linear infinite alternate-reverse;
+}
+
+@keyframes loading_animation{
+    50%{transform: translateY(1rem);}
+    100%{transform: translateY(0);}
+}

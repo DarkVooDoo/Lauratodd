@@ -1,0 +1,26 @@
+
+.prod_selection{
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    margin: var(--Rows_Margin) 0;
+}
+
+.prod_selection_units{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.prod_list{
+    height: 60vh;
+    overflow-y: scroll;
+}
+
+.prod_list_header{
+    display: none;
+}
+
+.prod_list_item_name{
+    width: 80%;
+}

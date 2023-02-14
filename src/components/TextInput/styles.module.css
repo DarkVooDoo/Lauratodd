@@ -1,0 +1,47 @@
+.container{
+    --Send_Btn_dimension: 2rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--Rows_Margin);
+}
+
+.container_input{
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--Send_Btn_dimension);
+    width: calc(100% - var(--Send_Btn_dimension) - .5rem);
+}
+
+.container_input_field{
+    border-radius: var(--Button_Border_Radius);
+    display: flex;
+    align-items: center;
+    padding: calc(var(--Button_Border_Radius) / 2);
+    width: 100%;
+    height: 100%;
+    background-color: lightgray;
+}
+
+.container_input_label{
+    position: absolute;
+    font-size: .9rem;
+    top: calc(var(--Send_Btn_dimension) - (1rem * 1.7));
+    left: calc(var(--Button_Border_Radius) / 2);
+    transition: all .5s;
+}
+
+.container_input_field:focus +.container_input_label, .container_input_field:valid + .container_input_label{
+    top: 0;
+    font-size: .5rem;
+}
+
+.container_sendBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--Button_Border_Radius);
+    height: var(--Send_Btn_dimension);
+    width: var(--Send_Btn_dimension);
+    background-color: lightgray;
+}

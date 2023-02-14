@@ -1,0 +1,17 @@
+
+
+.list_content{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    height: 2rem;
+    align-items: center;
+    padding: .3rem;
+}
+
+.list_content_item{
+    padding-right: .5rem;
+}
+
+.list_content:nth-child(2n){
+    background-color: lightgray;
+}

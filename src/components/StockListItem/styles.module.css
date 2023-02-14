@@ -1,0 +1,18 @@
+.cookie{
+    height: 3rem;
+}
+
+.cookie_amount{
+    height: 100%;
+    width: 100%;
+}
+
+.cookie_amount_input{
+    height: 100%;
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 0 .3rem;
+}
+
+

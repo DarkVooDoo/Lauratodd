@@ -1,0 +1,46 @@
+.prod_header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--Rows_Margin);
+}
+
+.prod_header_room{
+    width: 35%;
+}
+
+.prod_cookieSelection{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: var(--Rows_Margin);
+}
+
+.prod_cookieSelection_name{
+    width: 70%;
+}
+
+.prod_cookieSelection_types{
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prod_submit{
+    position: fixed;
+    bottom: calc(var(--Footer_Height) + 1rem);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.prod_submit_btn{
+    width: 70%;
+    height: 2.5rem;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--Primary_Color);
+    font-weight: bold;
+    -webkit-box-shadow: 0px 0px 3px 1px #000000; 
+    box-shadow: 0px 0px 3px 1px #000000;
+    
+}

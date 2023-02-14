@@ -1,0 +1,22 @@
+.nav{
+    position: sticky;
+    height: var(--Navbar_Height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #00BBF9;
+    top: 0;
+    z-index: 100;
+}
+
+.nav_link{
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.nav_menu{
+    width: calc(var(--Navbar_Height) - .5rem);
+    height: calc(var(--Navbar_Height) - .5rem);
+    border-radius: 5px;
+    border: 1px solid white;
+}

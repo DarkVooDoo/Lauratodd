@@ -1,0 +1,27 @@
+.list{
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.list_headers{
+    background-color: var(--Primary_Color);
+}
+
+.list_headers, .list_content > div{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    padding: .3rem;
+}
+
+.list_headers div:first-child, .list_content > * *:first-child{
+    grid-column: 1 / 10;
+}
+
+.list_content > * *:last-child{
+    grid-column: 10 / 13;
+}
+
+.list_content div:nth-child(2n){
+    background-color: lightgray;
+}

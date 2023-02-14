@@ -1,0 +1,33 @@
+.prod_list_item{
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    border-radius: 5px;
+    padding: .3rem;
+    margin-bottom: var(--Rows_Margin);
+    background-color: var(--Primary_Color);
+}
+
+.prod_list_item_content{
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.prod_list_item_actions{
+    display: flex;
+    height: 2rem;
+    gap: .5rem;
+}
+
+.prod_list_item_actions_btn{
+    height: 100%;
+    width: 2rem;
+    border-radius: 5px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
