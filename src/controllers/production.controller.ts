@@ -12,6 +12,7 @@ export const onAddCookie = (unit:string, value: string, selectedCookie: any, coo
         cookie_id: selectedCookie.id, 
         cookie_created: "", 
         cookie_packaging: 0, 
+        cookie_weight: 0,
         cookie_name: selectedCookie.name, 
         cookie_amount: unit == "pièce" ? parseInt(value) : parseInt(value) * selectedCookie.packaging}, ...cookieList
     ]
