@@ -33,27 +33,41 @@ const ProdCalculation:React.FC = ()=>{
     return (
         <main>
             <button onClick={onCalculeProd}>Calcule</button>
-            <h1>Lundi</h1>
-            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
-                <>{monday}</>
-            </ListWithHeader>
-            <h1>Mardi</h1>
-            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
-                <>{tuesday}</>
-            </ListWithHeader>
-            <h1>Mercredi</h1>
-            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
-                <>{wednesday}</>
-            </ListWithHeader>
-            <h1>Jeudi</h1>
-            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
-                <>{thuesday}</>
-            </ListWithHeader>
-            <h1>Vendredi</h1>
-            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
-                <>{friday}</>
-            </ListWithHeader>
-          
+            {monday.length > 0 ? 
+            <>
+                <h1>Lundi</h1>
+                <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                    <>{monday}</>
+                </ListWithHeader> 
+            </>: null}
+            {tuesday.length > 0 ? 
+            <>
+                <h1>Mardi</h1>
+                <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                    <>{tuesday}</>
+                </ListWithHeader> 
+            </>: null}
+            {wednesday.length > 0 ? 
+            <>
+                <h1>Mercredi</h1>
+                <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                    <>{wednesday}</>
+                </ListWithHeader> 
+            </>: null}
+            {thuesday.length > 0 ? 
+            <>
+                <h1>Jeudi</h1>
+                <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                    <>{thuesday}</>
+                </ListWithHeader> 
+            </>: null}
+            {friday.length > 0 ? 
+            <>
+                <h1>Vendredi</h1>
+                <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                    <>{friday}</>
+                </ListWithHeader> 
+            </>: null}
         </main>
     )
 }
