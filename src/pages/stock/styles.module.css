@@ -1,0 +1,13 @@
+.stock_top{
+    display: flex;
+    justify-content: space-between;
+    margin: var(--Rows_Margin) 0;
+}
+
+.stock_top_updateBtn{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--Primary_Color);
+}

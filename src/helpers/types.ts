@@ -28,7 +28,7 @@ export interface CookieAdvancedTypes extends CookieTypes{
 export type ProdDayTypes = {
     id: string,
     name: string,
-    amount: number
+    amount: string
 } 
 
 export type CookieTotal = {

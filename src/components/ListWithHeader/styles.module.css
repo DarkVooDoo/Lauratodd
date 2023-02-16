@@ -23,5 +23,5 @@
 }
 
 .list_content div:nth-child(2n){
-    background-color: lightgray;
+    background-color: var(--Primary_Color_Gray);
 }

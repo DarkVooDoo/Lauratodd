@@ -1,4 +1,4 @@
-import { CookieAdvancedTypes } from "./types"
+import { CookieAdvancedTypes, ProdDayTypes } from "./types"
 
 class Machine {
     public allCookies: CookieAdvancedTypes[]
@@ -8,6 +8,7 @@ class Machine {
     private kilo = 1000
     private sheetData: any[][] = []
     private list: any[][] = []
+    day = 0
     
     constructor( allCookies: CookieAdvancedTypes[], sheetData: any[][]){
         this.allCookies = allCookies
@@ -24,6 +25,7 @@ class Machine {
     }
 
     createDay = (dayList: CookieAdvancedTypes[])=>{
+        this.day += 1
         let isLait = 0  
         let isNoir = 0
         let isBlanc = 0
@@ -59,17 +61,28 @@ class Machine {
             if(this.machine.length === 1){
                 const machineMatchup = this.allCookies.filter(cookie=>cookie.category_family === this.machine[0].category_family && cookie.cookie_id !== this.machine[0].cookie_id && !cookie.category_isendchain)
                 if(this.machine[0].category_family !== 'All' && !this.machine[0].category_isendchain) machineMatchup.push(paradise!) 
-                const cookieSelection = machineMatchup.sort((a, b)=>a.cookie_amount - b.cookie_amount)[0]
+                const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
                 this.machine.push(cookieSelection)
             }else if(this.machine.length === 0){
                 // TODO: Repair Paradise matchup
-                const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort((a, b)=>a.cookie_amount - b.cookie_amount)[0]
+                const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort((a, b)=>a.needed - b.needed)[0]
                 const machineMatchup = this.allCookies.filter(cookie=>cookieMostNeeded.category_family === cookie.category_family && cookieMostNeeded.cookie_id !== cookie.cookie_id && !cookieMostNeeded.category_isendchain)
                 if(cookieMostNeeded.category_family !== 'All' && !cookieMostNeeded.category_isendchain) machineMatchup.push(paradise!)
-                else if(cookieMostNeeded.category_family === 'All') machineMatchup.push(this.allCookies.filter(cookie=>cookie.cookie_ismachine && !cookie.category_isendchain).sort((a, b)=>a.cookie_amount - b.cookie_amount)[0]) 
-                const cookieSelection = machineMatchup.sort((a, b)=>a.cookie_amount - b.cookie_amount)[0]
+                else if(cookieMostNeeded.category_family === 'All') machineMatchup.push(this.allCookies.filter(cookie=>cookie.cookie_ismachine && !cookie.category_isendchain).sort(this.sortByPercentageNeeds)[0]) 
+                const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
                 this.machine.push(cookieMostNeeded, cookieSelection)
             }
+        }
+        const machineEndCookies = this.machine.filter(cookie=>cookie.category_isendchain)
+        if(machineEndCookies.length > 1){
+            //Good
+            const chosenCookie = machineEndCookies.sort(this.sortByPercentageNeeds)
+            chosenCookie.forEach((cookie, index)=>{
+                if(index < 1) return
+                const indexInTheMachine = this.machine.findIndex(machineCookie=>cookie.cookie_id === machineCookie.cookie_id)
+                this.hand.push(this.machine[indexInTheMachine])
+                this.machine.splice(indexInTheMachine, 1)
+            })
         }
 
         const machineMap = this.machine.map(cookie=>{
@@ -77,7 +90,7 @@ class Machine {
             if(!currentCookie) return
             const [amountInKilos, amountInPieces] = this.CalculateWeight(currentCookie)
             currentCookie.cookie_amount += amountInPieces
-            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: amountInKilos}
+            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${amountInKilos} KG`}
         })
         
         const handMap = this.hand.map(cookie=>{
@@ -86,11 +99,11 @@ class Machine {
             if(this.hand.length < 1){
                     const [amountInKilos, amountInPieces] = this.CalculateWeight(currentCookie)
                     currentCookie.cookie_amount += amountInPieces
-                    return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: amountInKilos}
+                    return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${amountInKilos} KG`}
                 }
                 const pieces = (this.dough / (cookie.cookie_packaging * cookie.cookie_weight)) * cookie.cookie_packaging
                 currentCookie.cookie_amount += pieces
-                return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: this.dough / this.kilo} 
+                return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${this.dough / this.kilo} KG`} 
         })
             
         this.list.push(machineMap.concat(handMap))
@@ -120,13 +133,20 @@ class Machine {
             
     }
 
+    private sortByPercentageNeeds = (a:CookieAdvancedTypes, b:CookieAdvancedTypes):number=>{
+        const firstCookie = (a.cookie_amount / a.cookie_packaging) / (a.needed + (a.cookie_threshold / a.cookie_packaging)) * 100
+        const secondCookie =(b.cookie_amount / b.cookie_packaging) / (b.needed + (b.cookie_threshold / b.cookie_packaging)) * 100
+        return firstCookie - secondCookie
+
+    }
+
     private CookieAsked = (cookie: any[], currentPosition: number, end: number, result: number[]):number[]=>{
         if(end === currentPosition) return result
         return this.CookieAsked(cookie, currentPosition + 1, end, result)
     }
 
     private CalculateWeight = (cookie: CookieAdvancedTypes)=>{
-        const totalInGram = Math.ceil(cookie.cookie_packaging * cookie.cookie_weight * cookie.needed / this.dough) * this.dough
+        const totalInGram = Math.ceil(cookie.cookie_packaging * cookie.cookie_weight * (cookie.needed + (cookie.cookie_threshold / cookie.cookie_packaging)) / this.dough) * this.dough
         const cookieBoxWeight = cookie.cookie_packaging * cookie.cookie_weight
         const kilos = totalInGram / this.kilo
         const piecesAmount = (totalInGram / cookieBoxWeight) * cookie.cookie_packaging

@@ -1,10 +1,15 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
 
+import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome"
+import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons"
+
 import {CookieTypes } from "@/helpers/types"
 
 import StockListItem from "@/components/StockListItem/StockListItem"
 import ListWithHeader from "@/components/ListWithHeader/ListWithHeader"
+
+import styles from "./styles.module.css"
 
 interface NameProps {
     stock: CookieTypes[]
@@ -34,9 +39,11 @@ const Stock:React.FC<NameProps> = ({stock})=>{
     const myStock = stock.map(cookie=><StockListItem key={cookie.cookie_id} {...{...cookie, onListChange}} />)
     return (
         <main>
-            <div style={{display: "flex", justifyContent: "space-between", margin: "var(--Rows_Margin) 0"}}>
+            <div className={styles.stock_top}>
                 <h1>Stock</h1>
-                <button onClick={onUpdateStock}>Enregistrer</button>
+                <button onClick={onUpdateStock} className={styles.stock_top_updateBtn}>
+                    <Icon {...{icon: faCloudArrowUp, size: '1x'}} />
+                </button>
             </div>
             <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
                 <>{myStock}</>

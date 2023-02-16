@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #00BBF9;
+    background-color: var(--Primary_Color);
     top: 0;
     z-index: 100;
 }

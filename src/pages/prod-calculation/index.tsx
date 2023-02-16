@@ -1,6 +1,8 @@
 import {useState} from "react"
 
 import { ProdDayTypes } from "@/helpers/types"
+
+import ListWithHeader from "@/components/ListWithHeader/ListWithHeader"
  
 const ProdCalculation:React.FC = ()=>{
 
@@ -22,51 +24,50 @@ const ProdCalculation:React.FC = ()=>{
         setThu(data[3])
         setFri(data[4])
     }
-    const monday = mon.map(cookie=>(
-        <div key={Math.random()}>
-            <p>{cookie.name} </p>
-            <p>{cookie.amount} </p>
-        </div>
-    ))
-    const tuesday = tue.map(cookie=>(
-        <div key={Math.random()}>
-            <p>{cookie.name} </p>
-            <p>{cookie.amount} </p>
-        </div>
-    )) 
-    const wednesday = wed.map(cookie=>(
-        <div key={Math.random()}>
-            <p>{cookie.name} </p>
-            <p>{cookie.amount} </p>
-        </div>
-    )) 
-    const thuesday = thu.map(cookie=>(
-        <div key={Math.random()}>
-            <p>{cookie.name} </p>
-            <p>{cookie.amount} </p>
-        </div>
-    )) 
-    const friday = fri.map(cookie=>(
-        <div key={Math.random()}>
-            <p>{cookie.name} </p>
-            <p>{cookie.amount} </p>
-        </div>
-    )) 
+    const monday = mon.map(cookie=><Dough key={Math.random()} {...{...cookie}} />)
+    const tuesday = tue.map(cookie=><Dough key={Math.random()} {...{...cookie}} />) 
+    const wednesday = wed.map(cookie=><Dough key={Math.random()} {...{...cookie}} />) 
+    const thuesday = thu.map(cookie=><Dough key={Math.random()} {...{...cookie}} />) 
+    const friday = fri.map(cookie=><Dough key={Math.random()} {...{...cookie}} />) 
 
     return (
-        <div>
+        <main>
             <button onClick={onCalculeProd}>Calcule</button>
             <h1>Lundi</h1>
-            {monday}
+            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                <>{monday}</>
+            </ListWithHeader>
             <h1>Mardi</h1>
-            {tuesday}
+            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                <>{tuesday}</>
+            </ListWithHeader>
             <h1>Mercredi</h1>
-            {wednesday}
+            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                <>{wednesday}</>
+            </ListWithHeader>
             <h1>Jeudi</h1>
-            {thuesday}
+            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                <>{thuesday}</>
+            </ListWithHeader>
             <h1>Vendredi</h1>
-            {friday}
+            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                <>{friday}</>
+            </ListWithHeader>
           
+        </main>
+    )
+}
+
+interface DoughProps{
+    name: string,
+    amount: string
+}
+
+const Dough:React.FC<DoughProps> = ({name, amount})=>{
+    return (
+        <div key={Math.random()}>
+            <p>{name} </p>
+            <p>{amount} </p>
         </div>
     )
 }
