@@ -53,7 +53,7 @@ const Stock:React.FC<NameProps> = ({stock})=>{
 }
 
 export const getServerSideProps = async ()=>{
-    const fetchStock = await fetch(`${process.env.URL}`)
+    const fetchStock = await fetch(`${process.env.URL}/api/stock`)
     const stock = await fetchStock.json() as {stock: CookieTypes[]}
     return {
         props:{...stock}
