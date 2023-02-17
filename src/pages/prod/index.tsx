@@ -22,7 +22,7 @@ interface ProductionProps {
 }
 
 const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, room, unit})=>{
-    const units = ["bac", "pièce"]
+    const units = ["Bac", "Piece"]
 
     const [unitType, setUnitType] = useState(unit ? unit : units[0])
     const [currentRoom, setCurrentRoom] = useState(room ? room : "Prod")
@@ -32,16 +32,21 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
 
     const unitTypes = units.map(item=>(
         <div key={Math.random()}>
-            <label htmlFor={item}>{item[0].toUpperCase()+item.substring(1)} </label>
+            <label htmlFor={item}>{item} </label>
             <input type="radio" name="unit" id={item} checked={unitType === item} onChange={({currentTarget:{id}})=>setUnitType(onUnitChange(id))} />
         </div>
     ))
 
-    const listOfCookies = cookieList.map((cookie, index)=><CookieListItem key={Math.random()} {...{...cookie, index, className: currentRoom === "Cuisson" ? "warning" : "good", onRemove: (index)=>{
-        const [list, total] = onRemoveCookieFromList(index, cookieList, cookieTotal)
-        setCookieList(list)
-        setCookieTotal(total)
-    }}} />)
+    const listOfCookies = cookieList.map((cookie, index)=><CookieListItem key={Math.random()} 
+    {...{...cookie, 
+        index, 
+        className: currentRoom === "Cuisson" ? "warning" : "good", 
+        onRemove: (index)=>{
+            const [list, total] = onRemoveCookieFromList(index, cookieList, cookieTotal)
+            setCookieList(list)
+            setCookieTotal(total)
+        }}
+    } />)
     return (
         <main>
             <div className={styles.prod_header}>
@@ -85,6 +90,7 @@ export const getServerSideProps:GetServerSideProps = async ({req})=>{
     const fetchData = await fetch(`http://localhost:3000/api/production`)
     const data = await fetchData.json() as {room: DropdownTypes, cookies: CookieTypes[]}
     const {room, unit} = req.cookies
+    console.log(req.cookies)
     return {
         props: {...data, room, unit}
     }

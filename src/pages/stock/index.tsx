@@ -4,7 +4,7 @@ import { useState } from "react"
 import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome"
 import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons"
 
-import {CookieTypes } from "@/helpers/types"
+import {CookieTypes, StockChangesTypes } from "@/helpers/types"
 
 import StockListItem from "@/components/StockListItem/StockListItem"
 import ListWithHeader from "@/components/ListWithHeader/ListWithHeader"
@@ -30,7 +30,7 @@ const Stock:React.FC<NameProps> = ({stock})=>{
         if(updateStock.status === 200) route.push("/")
     }
 
-    const onListChange = (id:string, value: string, hasChange: boolean)=>{
+    const onListChange = (id:string, value: StockChangesTypes, hasChange: boolean)=>{
         if(hasChange) setChanges(changes.set(id, value))
         else{
             changes.delete(id)
@@ -38,6 +38,7 @@ const Stock:React.FC<NameProps> = ({stock})=>{
         }
         if(changes.size > 0) setHasChange(true)
         else setHasChange(false)
+        console.log(changes)
     }
     const myStock = stock.map(cookie=><StockListItem key={cookie.cookie_id} {...{...cookie, onListChange}} />)
     return (
@@ -52,7 +53,7 @@ const Stock:React.FC<NameProps> = ({stock})=>{
                     <Icon {...{icon: faCloudArrowUp, size: '1x'}} />
                 </button>
             </div>
-            <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+            <ListWithHeader {...{headers: ["Nom", "Poids", "Machine", "Qté"]}}>
                 <>{myStock}</>
             </ListWithHeader>
         </main>

@@ -2,22 +2,22 @@ import {google} from "googleapis"
 
 import Pool from "./DBConnection"
 
-import { CookieAdvancedTypes } from "@/helpers/types"
+import { CookieAdvancedTypes, StockChangesTypes } from "@/helpers/types"
 import Machine from "@/helpers/Machine"
 
 export const GetStock = async ()=>{
     try{
-        const {rows:cookies} = await Pool().query<CookieAdvancedTypes>(`SELECT cookie_name, cookie_amount, cookie_weight, cookie_threshold, cookie_ratio,  cookie_id, cookie_created, cookie_packaging FROM Cookie ORDER BY cookie_name ASC`)
+        const {rows:cookies} = await Pool().query<CookieAdvancedTypes>(`SELECT cookie_name, cookie_amount, cookie_weight, cookie_threshold, cookie_ratio,  cookie_id, cookie_created, cookie_ismachine, cookie_packaging FROM Cookie ORDER BY cookie_name ASC`)
         return {stock_cookie: cookies}
     }catch(e){
         throw("Error")
     }
 }
 
-export const UpdateStock = async (changes: [string, string][])=>{
-    for(const [id, value] of changes){
+export const UpdateStock = async (changes: [string, StockChangesTypes][])=>{
+    for(const [id, {amount, weight, isMachine}] of changes){
         try{
-            await Pool().query(`UPDATE Cookie SET cookie_amount=$1 WHERE cookie_id=$2`, [value, id])
+            await Pool().query(`UPDATE Cookie SET cookie_amount=$2, cookie_weight=$3, cookie_ismachine=$4  WHERE cookie_id=$1`, [id, amount, weight, isMachine])
         }catch(e){
             throw("Error")
         }

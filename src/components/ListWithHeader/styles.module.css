@@ -9,19 +9,37 @@
 
 .list_headers, .list_content > div{
     display: grid;
+    gap: 1rem;
     grid-template-columns: repeat(12, 1fr);
     align-items: center;
     padding: .3rem;
 }
 
 .list_headers div:first-child, .list_content > * *:first-child{
-    grid-column: 1 / 10;
+    grid-column: span 9;
 }
 
-.list_content > * *:last-child{
-    grid-column: 10 / 13;
+.list_headers div:first-child ~ *, .list_content > * *:first-child ~ *{
+    grid-column: span 3;
 }
 
 .list_content div:nth-child(2n){
     background-color: var(--Primary_Color_Gray);
+}
+
+.large_screen{
+    display: none;
+}
+
+@media screen and (min-width: 767px) {
+    .list_headers div:first-child, .list_content > * *:first-child{
+        grid-column: 1 / 6;
+    }
+
+    .list_headers div:first-child ~ *, .list_content > * *:first-child ~ *{
+        grid-column: span 2;
+    }
+    .large_screen{
+        display: block;
+    }
 }

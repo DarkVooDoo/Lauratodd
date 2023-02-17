@@ -13,7 +13,14 @@ export type CookieTypes = {
     cookie_packaging: number,
     cookie_created: string,
     cookie_amount: number,
+    cookie_ismachine: boolean,
     cookie_weight: number
+}
+
+export interface StockChangesTypes{
+    weight: string, 
+    amount: string,
+    isMachine: boolean
 }
 
 export interface CookieAdvancedTypes extends CookieTypes{

@@ -8,11 +8,15 @@ interface ListWithHeaderProps {
 
 const ListWithHeader:React.FC<ListWithHeaderProps> = ({headers, children})=>{
 
-    const myHeaders = headers.map(item=>(
-        <div key={Math.random()} className={styles.list_headers_name} >
-            <p>{item}</p>
-        </div>
-    ))
+    const myHeaders = headers.map((item, index, array)=>{
+        let isLargeScreen = ""
+        if(index > 0 && index < array.length - 1) isLargeScreen = styles.large_screen
+        return (
+            <div key={Math.random()} className={`${isLargeScreen}`} >
+                <p>{item}</p>
+            </div>
+        )
+    })
     return (
         <div className={styles.list}>
             <div className={styles.list_headers}>

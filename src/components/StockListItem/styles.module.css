@@ -2,17 +2,27 @@
     height: 3rem;
 }
 
-.cookie_amount{
+.cookie_field{
     height: 100%;
     width: 100%;
 }
 
-.cookie_amount_input{
+.large_screen{
+    display: none;
+}
+
+.cookie_field_input{
     height: 100%;
     width: 100%;
     border: 1px solid gray;
     border-radius: 5px;
     padding: 0 .3rem;
+}
+
+@media screen and (min-width: 767px) {
+    .large_screen{
+        display: block;
+    }
 }
 
 

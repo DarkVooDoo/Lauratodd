@@ -3,7 +3,7 @@ import { useState } from "react"
 
 import styles from "./styles.module.css"
 
-const ROUTES = [{route: "/stock", label: "Stock"}, {route: "/prod-calculation", label: "Calculation"}]
+const ROUTES = [{route: "/stock", label: "Stock"}, {route: "/prod", label: "Production"}, {route: "/prod-calculation", label: "Calculation"}]
 
 const Navbar = ()=>{
 

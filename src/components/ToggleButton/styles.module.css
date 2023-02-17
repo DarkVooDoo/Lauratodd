@@ -1,0 +1,27 @@
+.toggle{
+    position: relative;
+    width: calc(2rem * 2);
+    height: 2rem;
+    border-radius: 25px;
+    background-color: rgb(162, 162, 162);
+    border: none;
+}
+
+.toggle_state{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    transition: all .4s linear;
+    background-color: lightgray;
+}
+
+.toggle_on{
+    right: 2rem;
+}
+
+.toggle_on_color{
+    background-color: #0496FF;
+}

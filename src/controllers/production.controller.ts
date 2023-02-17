@@ -13,12 +13,13 @@ export const onAddCookie = (unit:string, value: string, selectedCookie: any, coo
         cookie_created: "", 
         cookie_packaging: 0, 
         cookie_weight: 0,
+        cookie_ismachine: false,
         cookie_name: selectedCookie.name, 
-        cookie_amount: unit == "pièce" ? parseInt(value) : parseInt(value) * selectedCookie.packaging}, ...cookieList
+        cookie_amount: unit == "Piece" ? parseInt(value) : parseInt(value) * selectedCookie.packaging}, ...cookieList
     ]
     const cookie = cookieTotal.find(cookie=>cookie.id === selectedCookie.id)
-    if(!cookie) return [cookieList, cookieTotal = [{id: selectedCookie.id, name: selectedCookie.name, amount: unit == "pièce" ? parseInt(value) : parseInt(value) * selectedCookie.packaging}, ...cookieTotal]]
-    cookie.amount += unit == "pièce" ? parseInt(value) : parseInt(value) * selectedCookie.packaging
+    if(!cookie) return [cookieList, cookieTotal = [{id: selectedCookie.id, name: selectedCookie.name, amount: unit == "Piece" ? parseInt(value) : parseInt(value) * selectedCookie.packaging}, ...cookieTotal]]
+    cookie.amount += unit == "Piece" ? parseInt(value) : parseInt(value) * selectedCookie.packaging
     return [cookieList, cookieTotal]
 }
 
