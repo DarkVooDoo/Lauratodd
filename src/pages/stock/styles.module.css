@@ -9,5 +9,5 @@
     height: 2rem;
     border-radius: 50%;
     border: none;
-    background-color: var(--Primary_Color);
+    /* transition: background-color .4s linear; */
 }

@@ -13,7 +13,7 @@ const Stock = async (req:NextApiRequest, res:NextApiResponse)=>{
     }else if(req.method === "POST"){
         try{
             const week = await CalculeWeekProduction()
-            res.send({...week})
+            res.send(week)
         }catch(e){
             res.status(400).send({status: "Failed"})
         }
