@@ -18,16 +18,16 @@ const CreateCookie:React.FC<CreateCookieProps> = ({category})=>{
         packaging: {content: "100", type: "number"}, 
         threshold: {content: "100", type: "number"}
     })
-    const [isMachine, setIsMachine] = useState(false)
+    const [isMachine, setIsMachine] = useState(true)
     const [onMenu, setOnMenu] = useState(true)
     const [family, setFamily] = useState(new Set())
 
     const onCookieCreation:FormEventHandler = async (e)=>{
         e.preventDefault()
         const createCookie = await fetch(`/api/cookie`, {
-            method: "POST",
-            headers: [["Content-Type", "application/json"]],
-            body: JSON.stringify({
+                method: "POST",
+                headers: [["Content-Type", "application/json"]],
+                body: JSON.stringify({
                 name: cookie.name.content, 
                 amount: cookie.amount.content,
                 weight: cookie.weight.content,
@@ -66,20 +66,20 @@ const CreateCookie:React.FC<CreateCookieProps> = ({category})=>{
 
     return (
         <div className={styles.create}>
-            <h3 className={styles.create_header}>Ajouter un cookie</h3>    
+            <h3 className={styles.create_header}>Ajouter un cookie</h3>  
+            <div className={styles.create_columns}>
+                <div>
+                    <p>Dans la machine</p>
+                    <ToggleButton {...{state: isMachine, onChange: (state)=>setIsMachine(state)}} />
+                </div>
+                <div>
+                    <p>Dans le menu</p>
+                    <ToggleButton {...{state: onMenu, onChange: (state)=>setOnMenu(state)}} />
+                </div>
+            </div>  
             <form onSubmit={onCookieCreation} id="cookie_creation" className={styles.create_form}>
                 <div className={styles.create_form_category}>
                     {myCategorys}
-                </div>
-                <div className={styles.create_columns}>
-                    <div>
-                        <p>Dans la machine</p>
-                        <ToggleButton {...{state: isMachine, onChange: (state)=>setIsMachine(state)}} />
-                    </div>
-                    <div>
-                        <p>Dans le menu</p>
-                        <ToggleButton {...{state: onMenu, onChange: (state)=>setOnMenu(state)}} />
-                    </div>
                 </div>
                 {inputs}                
             </form>   

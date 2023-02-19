@@ -5,7 +5,7 @@
 }
 
 .create_form *:nth-child(1n){
-    margin-bottom: var(--Rows_Margin);
+    margin-bottom: calc(var(--Rows_Margin) - .2rem);
 }
 
 .create_form_category{
