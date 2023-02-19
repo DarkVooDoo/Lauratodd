@@ -23,5 +23,5 @@
 }
 
 .toggle_on_color{
-    background-color: #0496FF;
+    background-color: var(--BlueSky_Color);
 }

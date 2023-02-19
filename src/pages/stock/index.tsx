@@ -8,15 +8,20 @@ import {CookieTypes, StockChangesTypes } from "@/helpers/types"
 
 import StockListItem from "@/components/StockListItem/StockListItem"
 import ListWithHeader from "@/components/ListWithHeader/ListWithHeader"
+import Dropdown from "@/components/Dropdown/Dropdown"
+import Modal from "@/components/Modal/Modal"
+import CreateCookie from "@/components/CreateCookie/CreateCookie"
 
 import styles from "./styles.module.css"
 
 interface NameProps {
-    stock: CookieTypes[]
+    stock: CookieTypes[],
+    category: string[]
 }
 
-const Stock:React.FC<NameProps> = ({stock})=>{
+const Stock:React.FC<NameProps> = ({stock, category})=>{
     const route = useRouter()
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [changes, setChanges] = useState(new Map())
     const [hasChange, setHasChange] = useState(false)
 
@@ -38,7 +43,6 @@ const Stock:React.FC<NameProps> = ({stock})=>{
         }
         if(changes.size > 0) setHasChange(true)
         else setHasChange(false)
-        console.log(changes)
     }
     const myStock = stock.map(cookie=><StockListItem key={cookie.cookie_id} {...{...cookie, onListChange}} />)
     return (
@@ -53,16 +57,24 @@ const Stock:React.FC<NameProps> = ({stock})=>{
                     <Icon {...{icon: faCloudArrowUp, size: '1x'}} />
                 </button>
             </div>
-            <ListWithHeader {...{headers: ["Nom", "Poids", "Machine", "Qté"]}}>
+            <div className={styles.stock_actions}>
+                <button className={styles.stock_actions_newBtn} onClick={()=>setIsModalOpen(true)}>Nouveau cookie</button>
+                <Dropdown {...{items: [{id: "Order A-Z", name: "Order A-Z"}, {id: "Hello", name: "Visible"}], value: "Order A-Z"}} />
+            </div>
+            <ListWithHeader {...{headers: ["Nom", "Au Menu", "Poids", "Machine", "Qté"]}}>
                 <>{myStock}</>
             </ListWithHeader>
+            {isModalOpen && 
+            <Modal {...{state: isModalOpen, className: styles.stock_modal, onChange: (state)=>setIsModalOpen(state)}}>
+                <CreateCookie {...{category}} />
+            </Modal>}
         </main>
     )
 }
 
 export const getServerSideProps = async ()=>{
     const fetchStock = await fetch(`${process.env.URL}/api/stock`)
-    const stock = await fetchStock.json() as {stock: CookieTypes[]}
+    const stock = await fetchStock.json() as {stock: CookieTypes[], category: string[]}
     return {
         props:{...stock}
     }

@@ -7,17 +7,19 @@ import Machine from "@/helpers/Machine"
 
 export const GetStock = async ()=>{
     try{
-        const {rows:cookies} = await Pool().query<CookieAdvancedTypes>(`SELECT cookie_name, cookie_amount, cookie_weight, cookie_threshold, cookie_ratio,  cookie_id, cookie_created, cookie_ismachine, cookie_packaging FROM Cookie ORDER BY cookie_name ASC`)
-        return {stock_cookie: cookies}
+        const {rows:cookies} = await Pool().query<CookieAdvancedTypes>(`SELECT cookie_name, cookie_amount, cookie_weight, cookie_threshold, cookie_ratio, cookie_onmenu, cookie_id, cookie_created, cookie_ismachine, cookie_packaging FROM Cookie ORDER BY cookie_onmenu DESC, cookie_name ASC`)
+        const {rows:categorys} = await Pool().query<{category: string}>(`SELECT unnest(enum_range(NULL::Category_enum))::text AS category`)
+        const myCategorys = categorys.map(category=>category.category)
+        return {stock_cookie: cookies, categorys: myCategorys}
     }catch(e){
         throw("Error")
     }
 }
 
 export const UpdateStock = async (changes: [string, StockChangesTypes][])=>{
-    for(const [id, {amount, weight, isMachine}] of changes){
+    for(const [id, {amount, weight, isMachine, onMenu}] of changes){
         try{
-            await Pool().query(`UPDATE Cookie SET cookie_amount=$2, cookie_weight=$3, cookie_ismachine=$4  WHERE cookie_id=$1`, [id, amount, weight, isMachine])
+            await Pool().query(`UPDATE Cookie SET cookie_amount=$2, cookie_weight=$3, cookie_ismachine=$4, cookie_onmenu=$5  WHERE cookie_id=$1`, [id, amount, weight, isMachine, onMenu])
         }catch(e){
             throw("Error")
         }
@@ -26,7 +28,7 @@ export const UpdateStock = async (changes: [string, StockChangesTypes][])=>{
 
 export const CalculeWeekProduction = async ()=>{
     try{
-        const {rows:cookies} = await Pool().query<CookieAdvancedTypes>(`SELECT cookie_name, cookie_amount, cookie_weight, cookie_threshold, cookie_ratio, cookie_id, cookie_created, cookie_ismachine, cookie_packaging, category_family, category_isendchain FROM Cookie LEFT JOIN Category ON category_cookie_id=cookie_id ORDER BY cookie_name ASC`)
+        const {rows:cookies} = await Pool().query<CookieAdvancedTypes>(`SELECT cookie_name, cookie_amount, cookie_weight, cookie_threshold, cookie_ratio, cookie_id, cookie_created, cookie_ismachine, cookie_packaging, category_family, cookie_isendchain FROM Cookie LEFT JOIN Category ON category_cookie_id=cookie_id ORDER BY cookie_name ASC`)
         const auth = await google.auth.getClient({keyFilename: process.env.SHEET_CREDENTIALS, scopes: ["https://www.googleapis.com/auth/spreadsheets"]})
         const sheet = google.sheets({version: "v4", auth})
         const response = await sheet.spreadsheets.values.get({

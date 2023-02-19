@@ -9,5 +9,23 @@
     height: 2rem;
     border-radius: 50%;
     border: none;
-    /* transition: background-color .4s linear; */
+    transition: background-color .4s linear;
+}
+
+.stock_actions{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--Rows_Margin);
+}
+
+.stock_actions_newBtn{
+    background-color: var(--BlueSky_Color);
+    padding: .3rem;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.stock_modal{
+    width: 70%;
 }

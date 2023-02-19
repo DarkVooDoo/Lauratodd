@@ -1,0 +1,46 @@
+.create_header{
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: var(--Rows_Margin);
+}
+
+.create_form *:nth-child(1n){
+    margin-bottom: var(--Rows_Margin);
+}
+
+.create_form_category{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+.create_form_category_checkbox{
+    height: 1rem;
+    gap: .3rem;
+    display: flex;
+    align-items: center;
+}
+
+.create_field_input{
+    height: 2rem;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0 .3rem;
+}
+
+.create_columns{
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-bottom: var(--Rows_Margin);
+}
+
+.create_btn{
+    background-color: var(--Primary_Color);
+    border-radius: 5px;
+    height: 2rem;
+    width: 100%;
+    padding: 0 .5rem;
+}

@@ -1,5 +1,5 @@
 
-import { CookieTotal, CookieTypes } from "@/helpers/types"
+import { CookieTotal, CookieTypes, ProductionListType } from "@/helpers/types"
 import { CreateCookie } from "@/helpers/utils"
 
 export const onRoomChange = (value: string)=>{
@@ -7,13 +7,9 @@ export const onRoomChange = (value: string)=>{
     return value //setRoom(value)
 }
 
-export const onAddCookie = (unit:string, value: string, selectedCookie: any, cookieList: CookieTypes[], cookieTotal: CookieTotal[]):[CookieTypes[], CookieTotal[]]=>{
+export const onAddCookie = (unit:string, value: string, selectedCookie: any, cookieList: ProductionListType[], cookieTotal: CookieTotal[]):[ProductionListType[], CookieTotal[]]=>{
     cookieList = [{
         cookie_id: selectedCookie.id, 
-        cookie_created: "", 
-        cookie_packaging: 0, 
-        cookie_weight: 0,
-        cookie_ismachine: false,
         cookie_name: selectedCookie.name, 
         cookie_amount: unit == "Piece" ? parseInt(value) : parseInt(value) * selectedCookie.packaging}, ...cookieList
     ]
@@ -23,7 +19,7 @@ export const onAddCookie = (unit:string, value: string, selectedCookie: any, coo
     return [cookieList, cookieTotal]
 }
 
-export const onRemoveCookieFromList = (index: number, cookieList: CookieTypes[], cookieTotal: CookieTotal[]):[CookieTypes[], CookieTotal[]]=>{
+export const onRemoveCookieFromList = (index: number, cookieList: ProductionListType[], cookieTotal: CookieTotal[]):[ProductionListType[], CookieTotal[]]=>{
     const cookieToRemove = cookieList[index]
     const newCookieList = cookieList.filter((_,i)=>i !== index)
     const total = cookieTotal.find(cookie=>cookie.id === cookieToRemove.cookie_id)

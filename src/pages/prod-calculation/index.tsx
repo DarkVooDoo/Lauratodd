@@ -11,11 +11,11 @@ const ProdCalculation:React.FC = ()=>{
     const [week, setWeek] = useState<ProdDayTypes[][]>([])
 
     const onCalculeProd = async ()=>{
-        const test = await fetch(`/api/stock`,{
+        const calculateProd = await fetch(`/api/stock`,{
             method: "POST",
             headers: [["Content-Type", "application/json"]]
         })
-        const data = await test.json() as ProdDayTypes[][]
+        const data = await calculateProd.json() as ProdDayTypes[][]
         setWeek(data)
     }
     const prodToMake = week.map((day, index)=>{
@@ -32,7 +32,6 @@ const ProdCalculation:React.FC = ()=>{
             </div>
         )
     })
-   
 
     return (
         <main>

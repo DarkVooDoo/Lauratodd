@@ -37,7 +37,7 @@
     }
 
     .list_headers div:first-child ~ *, .list_content > * *:first-child ~ *{
-        grid-column: span 2;
+        grid-column: span 1;
     }
     .large_screen{
         display: block;

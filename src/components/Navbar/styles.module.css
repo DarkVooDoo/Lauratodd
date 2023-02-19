@@ -48,9 +48,8 @@
 }
 
 .nav_menu_links_row{
-    height: var(--Navbar_Link_Height);
-    padding: 0 .5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: var(--Navbar_Link_Height);
 }

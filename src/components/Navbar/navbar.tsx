@@ -9,11 +9,7 @@ const Navbar = ()=>{
 
   const [display, setDisplay] = useState(false)
 
-  const links = ROUTES.map(link=>(
-    <div key={link.route} className={styles.nav_menu_links_row}>
-      <Link href={link.route}>{link.label} </Link>
-    </div>
-  ))
+  const links = ROUTES.map(link=>(<Link key={link.route} href={link.route} className={styles.nav_menu_links_row}>{link.label} </Link>))
 
     return (
         <nav className={styles.nav}>
@@ -23,7 +19,7 @@ const Navbar = ()=>{
             <div className={`${styles.nav_menu_bar}`} />
             <div className={`${styles.nav_menu_bar}`} />
             <div 
-            className={`${styles.nav_menu_links} ${display ? styles.open : null}`} 
+            className={`${styles.nav_menu_links}`} 
             style={{height: `${display ? `calc(var(--Navbar_Link_Height) * ${ROUTES.length})` : "0px"}`}}>
               {links}
             </div>

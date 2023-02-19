@@ -6,7 +6,7 @@ const Stock = async (req:NextApiRequest, res:NextApiResponse)=>{
     if(req.method === "GET"){
         try{
             const stock = await GetStock()
-            res.send({stock: stock.stock_cookie})
+            res.send({stock: stock.stock_cookie, category: stock.categorys})
     }catch(e){
             res.status(403).send({status: "Failed"})
         }
@@ -14,6 +14,7 @@ const Stock = async (req:NextApiRequest, res:NextApiResponse)=>{
         try{
             const week = await CalculeWeekProduction()
             res.send(week)
+            res.send("Success")
         }catch(e){
             res.status(400).send({status: "Failed"})
         }

@@ -1,6 +1,7 @@
 :root{
     --Primary_Color: #F0B67F;
     --Primary_Color_Gray: #D5BAA1;
+    --BlueSky_Color: #0496FF;
     --Mobile-Page-Padding: .5rem;
   
     --Button_Border_Radius: 5px;
@@ -50,6 +51,10 @@ a {
     text-decoration: none;
 }
 
+button{
+    border: none;
+}
+
 .warning{
     background-color: #F3AF49 !important;
 }
@@ -61,4 +66,8 @@ a {
 .select_shop_dropdown{
     width: 30vw;
     height: 2rem;
+}
+
+.modal_open{
+    overflow-y: hidden;
 }

@@ -14,21 +14,24 @@ export type CookieTypes = {
     cookie_created: string,
     cookie_amount: number,
     cookie_ismachine: boolean,
-    cookie_weight: number
+    cookie_weight: number,
+    cookie_threshold: number,
+    cookie_ratio: number,
+    cookie_onmenu: boolean
 }
 
 export interface StockChangesTypes{
     weight: string, 
     amount: string,
-    isMachine: boolean
+    isMachine: boolean,
+    onMenu: boolean
 }
 
 export interface CookieAdvancedTypes extends CookieTypes{
     cookie_threshold: number,
     cookie_ratio: number,
-    cookie_ismachine: boolean,
-    category_isendchain: boolean,
-    category_family: "Lait" | "Noir" | "Blanc" | "None" | "All",
+    cookie_isendchain: boolean,
+    category_family: "Lait" | "Noir" | "Blanc" | "None",
     needed: number
 }
 
@@ -37,6 +40,12 @@ export type ProdDayTypes = {
     name: string,
     amount: string
 } 
+
+export type ProductionListType = {
+    cookie_id: string, 
+    cookie_name: string, 
+    cookie_amount: number
+}
 
 export type CookieTotal = {
     id: string,

@@ -5,6 +5,7 @@
 .cookie_field{
     height: 100%;
     width: 100%;
+    border-radius: 5px;
 }
 
 .large_screen{
@@ -22,6 +23,7 @@
 @media screen and (min-width: 767px) {
     .large_screen{
         display: block;
+        border-radius: 25px;
     }
 }
 

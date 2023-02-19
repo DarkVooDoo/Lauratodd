@@ -3,7 +3,7 @@ import { useState } from "react"
 import { GetServerSideProps } from "next"
 
 import { CreateCookie } from "@/helpers/utils"
-import {DropdownTypes, CookieTypes, CookieTotal} from "@/helpers/types"
+import {DropdownTypes, CookieTypes, CookieTotal, ProductionListType} from "@/helpers/types"
 import { onAddCookie, onRemoveCookieFromList, onSubmit, onUnitChange } from "@/controllers/production.controller"
 
 import Dropdown from "@/components/Dropdown/Dropdown"
@@ -27,7 +27,7 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
     const [unitType, setUnitType] = useState(unit ? unit : units[0])
     const [currentRoom, setCurrentRoom] = useState(room ? room : "Prod")
     const [currentCookie, setCurrentCookie] = useState({id: cookies[0].cookie_id, name: cookies[0].cookie_name, packaging: cookies[0].cookie_packaging})
-    const [cookieList, setCookieList] = useState<CookieTypes[]>([])
+    const [cookieList, setCookieList] = useState<ProductionListType[]>([])
     const [cookieTotal, setCookieTotal] = useState<CookieTotal[]>([])
 
     const unitTypes = units.map(item=>(
@@ -69,7 +69,7 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
                 }} />
                 <div className={styles.prod_cookieSelection_types}>
                     {unitTypes}
-                </div>
+                </div> 
             </div>
             <TextInput {...{type: "number", onConfirm: (value)=>{
                 const [list, total] = onAddCookie(unitType, value, currentCookie, cookieList, cookieTotal)

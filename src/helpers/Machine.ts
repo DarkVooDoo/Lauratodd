@@ -25,7 +25,6 @@ class Machine {
     }
 
     createDay = (dayList: CookieAdvancedTypes[])=>{
-        this.day += 1
         let isLait = 0  
         let isNoir = 0
         let isBlanc = 0
@@ -55,25 +54,21 @@ class Machine {
             this.machine = dayList.filter(cookie=>cookie.category_family === "Noir")
             this.hand = dayList.filter(cookie=>cookie.category_family !== "Noir")
         }
-        
+  
         if(this.machine.length < 2){
-            const paradise = this.allCookies.find(cookie=>cookie.category_family === "All")
             if(this.machine.length === 1){
-                const machineMatchup = this.allCookies.filter(cookie=>cookie.category_family === this.machine[0].category_family && cookie.cookie_id !== this.machine[0].cookie_id && !cookie.category_isendchain)
-                if(this.machine[0].category_family !== 'All' && !this.machine[0].category_isendchain) machineMatchup.push(paradise!) 
+                const machineMatchup = this.allCookies.filter(cookie=>cookie.category_family === this.machine[0].category_family && cookie.cookie_id !== this.machine[0].cookie_id && this.machine[0].cookie_isendchain !== cookie.cookie_isendchain)
                 const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
                 this.machine.push(cookieSelection)
             }else if(this.machine.length === 0){
-                // TODO: Repair Paradise matchup
                 const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort((a, b)=>a.needed - b.needed)[0]
-                const machineMatchup = this.allCookies.filter(cookie=>cookieMostNeeded.category_family === cookie.category_family && cookieMostNeeded.cookie_id !== cookie.cookie_id && !cookieMostNeeded.category_isendchain)
-                if(cookieMostNeeded.category_family !== 'All' && !cookieMostNeeded.category_isendchain) machineMatchup.push(paradise!)
-                else if(cookieMostNeeded.category_family === 'All') machineMatchup.push(this.allCookies.filter(cookie=>cookie.cookie_ismachine && !cookie.category_isendchain).sort(this.sortByPercentageNeeds)[0]) 
+                const machineMatchup = this.allCookies.filter(cookie=>cookieMostNeeded.category_family === cookie.category_family && cookieMostNeeded.cookie_id !== cookie.cookie_id && cookieMostNeeded.cookie_isendchain !== cookie.cookie_isendchain)
                 const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
                 this.machine.push(cookieMostNeeded, cookieSelection)
             }
         }
-        const machineEndCookies = this.machine.filter(cookie=>cookie.category_isendchain)
+
+        const machineEndCookies = this.machine.filter(cookie=>cookie.cookie_isendchain)
         if(machineEndCookies.length > 1){
             //Good
             const chosenCookie = machineEndCookies.sort(this.sortByPercentageNeeds)
