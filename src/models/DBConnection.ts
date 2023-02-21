@@ -1,6 +1,6 @@
 import {Pool} from "pg"
 
-const DBConnection = ()=>{
+export default ()=>{
     return new Pool({
         database: process.env.DB_DATABASE,
         user: process.env.DB_USER,
@@ -9,5 +9,3 @@ const DBConnection = ()=>{
         host: process.env.DB_HOST
     })
 }
-
-export default DBConnection
