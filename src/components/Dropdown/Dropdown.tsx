@@ -6,7 +6,7 @@ import styles from './Dropdown.module.css'
 
 interface DropdownProps{
     value: string,
-    items: {id: string, name: string}[],
+    items: {id: string, name: string, icon?: JSX.Element}[],
     className?: string,
     onChange?: (id:string, value: string)=> void
 }
@@ -21,7 +21,10 @@ const Dropdown:React.FC<DropdownProps> = ({items, className, onChange, value})=>
     }
 
     const dropdownList = items.map(item=>(
-        <p key={item.id} className={styles.dropdown_list_item} onClick={()=>onSelectionClick(item)} >{item.name} </p>
+        <div key={item.id} className={styles.dropdown_list_item} onClick={()=>onSelectionClick(item)} > 
+            {item.icon}
+            <p>{item.name}</p>
+        </div>
     ))
 
     return (

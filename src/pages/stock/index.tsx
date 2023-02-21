@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 
 import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome"
-import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons"
+import {faCloudArrowUp, faArrowDownAZ, faArrowDownZA, faArrowDown19} from "@fortawesome/free-solid-svg-icons"
 
 import {CookieTypes, StockChangesTypes } from "@/helpers/types"
 
@@ -19,8 +19,13 @@ interface NameProps {
     category: string[]
 }
 
+const SortBy = new Map().set("ASC", {id: "ASC", name: "Ordre A-Z", icon: <Icon icon={faArrowDownAZ} size="1x" />})
+.set("DESC", {id: "DESC", name: "Ordre Z-A", icon: <Icon icon={faArrowDownZA} size="1x" />})
+.set("Ordre Croissant", {id: "Ordre Croissant", name: "Ordre Croissant", icon: <Icon icon={faArrowDown19} size="1x" />})
+
 const Stock:React.FC<NameProps> = ({stock, category})=>{
     const route = useRouter()
+    const [selectedFilter, setSelectedFilter] = useState<{id: string, name: string, icon?: JSX.Element}>(SortBy.get("ASC"))
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [changes, setChanges] = useState(new Map())
     const [hasChange, setHasChange] = useState(false)
@@ -59,14 +64,20 @@ const Stock:React.FC<NameProps> = ({stock, category})=>{
             </div>
             <div className={styles.stock_actions}>
                 <button className={styles.stock_actions_newBtn} onClick={()=>setIsModalOpen(true)}>Nouveau cookie</button>
-                <Dropdown {...{items: [{id: "Order A-Z", name: "Order A-Z"}, {id: "Hello", name: "Visible"}], value: "Order A-Z"}} />
+                <Dropdown {...{
+                    items: Array.from<{id: string, name: string, icon?: JSX.Element}>(SortBy.values()), 
+                    value: selectedFilter.name,
+                    className: styles.stock_actions_filter,
+                    onChange:(id)=>{
+                        setSelectedFilter(SortBy.get(id))
+                }}} />
             </div>
-            <ListWithHeader {...{headers: ["Nom", "Au Menu", "Poids", "Machine", "Qté"]}}>
+            <ListWithHeader {...{headers: ["Nom", "Qté", "Au Menu", "Poids", "Marge", "Machine"]}}>
                 <>{myStock}</>
             </ListWithHeader>
             {isModalOpen && 
             <Modal {...{state: isModalOpen, className: styles.stock_modal, onChange: (state)=>setIsModalOpen(state)}}>
-                <CreateCookie {...{category}} />
+                <CreateCookie {...{category, onSuccess: ()=>setIsModalOpen(false)}} />
             </Modal>}
         </main>
     )

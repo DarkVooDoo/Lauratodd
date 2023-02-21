@@ -43,7 +43,12 @@
 
 .dropdown_list_item{
     display: flex;
+    gap: .3rem;
     padding: var(--Padding);
     align-items: center;
     height: 2rem;
+}
+
+.dropdown_list_item_icon{
+    float: right;
 }

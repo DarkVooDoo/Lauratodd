@@ -11,7 +11,7 @@ const Navbar = ()=>{
 
   const links = ROUTES.map(link=>(<Link key={link.route} href={link.route} className={styles.nav_menu_links_row}>{link.label} </Link>))
 
-    return (
+    return ( 
         <nav className={styles.nav}>
           <Link href={"/"} className={styles.nav_link}>Home</Link>
           <button className={styles.nav_menu} onClick={()=>setDisplay(!display)}>

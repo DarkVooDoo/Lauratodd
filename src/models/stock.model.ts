@@ -40,7 +40,6 @@ export const CalculeWeekProduction = async ()=>{
             const machine = new Machine(cookies, data).init()
             return machine
         }
-
     }catch(e){
         console.log(e)
         throw("Error")

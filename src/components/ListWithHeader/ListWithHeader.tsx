@@ -2,17 +2,17 @@
 import styles from "./styles.module.css"
 
 interface ListWithHeaderProps {
-    headers: string[]
+    headers: string[], 
     children: JSX.Element
 }
 
+//TODO: Fix Responsive
 const ListWithHeader:React.FC<ListWithHeaderProps> = ({headers, children})=>{
-
+ 
     const myHeaders = headers.map((item, index, array)=>{
-        let isLargeScreen = ""
-        if(index > 0 && index < array.length - 1) isLargeScreen = styles.large_screen
+
         return (
-            <div key={Math.random()} className={`${isLargeScreen}`} >
+            <div key={Math.random()} >
                 <p>{item}</p>
             </div>
         )

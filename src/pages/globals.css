@@ -3,10 +3,15 @@
     --Primary_Color_Gray: #D5BAA1;
     --BlueSky_Color: #0496FF;
     --Mobile-Page-Padding: .5rem;
+    --Tablet-Page-Padding: 3rem;
+    --Desktop-Page-Padding: 10rem;
+    --Desktop_Min_Width: 992px;
+    --Tablet_Min_Width: 768px;
   
     --Button_Border_Radius: 5px;
     --Navbar_Height: 3rem;
     --Footer_Height: 4rem;
+    --List_Content_Row_Height: 3rem;
   
     --Rows_Margin: .5rem ;
 }
@@ -70,4 +75,24 @@ button{
 
 .modal_open{
     overflow-y: hidden;
+}
+
+@media screen and (min-width: 767px){
+    main{
+        padding: var(--Mobile-Page-Padding) var(--Tablet-Page-Padding)
+    }
+
+    nav{
+        padding: 0 var(--Tablet-Page-Padding);
+    }
+}
+
+@media screen and (min-width: 992px){
+    main{
+        padding: var(--Mobile-Page-Padding) var(--Desktop-Page-Padding)
+    }
+
+    nav{
+        padding: 0 var(--Desktop-Page-Padding);
+    }
 }

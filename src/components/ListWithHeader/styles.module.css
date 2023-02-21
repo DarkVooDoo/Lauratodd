@@ -3,43 +3,71 @@
     border-radius: 5px;
 }
 
-.list_headers{
-    background-color: var(--Primary_Color);
-}
-
-.list_headers, .list_content > div{
+.list_headers, .list_content > *{
     display: grid;
-    gap: 1rem;
+    grid-gap: 1rem;
     grid-template-columns: repeat(12, 1fr);
     align-items: center;
     padding: .3rem;
+    overflow: hidden;
 }
 
-.list_headers div:first-child, .list_content > * *:first-child{
-    grid-column: span 9;
+.list_content > *{
+    height: calc(var(--List_Content_Row_Height));
 }
 
-.list_headers div:first-child ~ *, .list_content > * *:first-child ~ *{
-    grid-column: span 3;
+.list_headers{
+    padding: .3rem;
+    background-color: var(--Primary_Color);
 }
 
 .list_content div:nth-child(2n){
     background-color: var(--Primary_Color_Gray);
 }
 
-.large_screen{
+.list_headers div:first-child, .list_content > * *:first-child{
+    grid-column: span 2;
+}
+
+.list_headers div:first-child ~ *, .list_content > * *:first-child ~ *{
+    grid-column: span 2;
+}
+
+.list_content > * *:nth-child(5) ~ *{
+    background-color: blueviolet;
     display: none;
 }
 
-@media screen and (min-width: 767px) {
+.tablet_screen, .desktop_screen{
+    display: none;
+}
+
+@media screen and (max-width: 480px) {
+    
     .list_headers div:first-child, .list_content > * *:first-child{
-        grid-column: 1 / 6;
+        grid-column: span 8;
     }
 
     .list_headers div:first-child ~ *, .list_content > * *:first-child ~ *{
-        grid-column: span 1;
+        grid-column: span 4;
     }
-    .large_screen{
-        display: block;
+
+    .list_content > * *:nth-child(2) ~ *, .list_headers div:nth-child(2) ~ *{
+        display: none;
+    }
+    
+}
+
+@media screen and (min-width: 480px) and (max-width: 1024px){
+    .list_headers div:first-child, .list_content > * *:first-child{
+        grid-column: span 4;
+    }
+
+    .list_headers div:first-child ~ *, .list_content > * *:first-child ~ *{
+        grid-column: span 2;
+    }
+
+    .list_content > * *:nth-child(5) ~ *, .list_headers div:nth-child(5) ~ *{
+        display: none;
     }
 }

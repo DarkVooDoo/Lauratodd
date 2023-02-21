@@ -8,7 +8,6 @@ class Machine {
     private kilo = 1000
     private sheetData: any[][] = []
     private list: any[][] = []
-    day = 0
     
     constructor( allCookies: CookieAdvancedTypes[], sheetData: any[][]){
         this.allCookies = allCookies
@@ -24,7 +23,7 @@ class Machine {
         }
     }
 
-    createDay = (dayList: CookieAdvancedTypes[])=>{
+    private createDay = (dayList: CookieAdvancedTypes[])=>{
         let isLait = 0  
         let isNoir = 0
         let isBlanc = 0
@@ -57,13 +56,13 @@ class Machine {
   
         if(this.machine.length < 2){
             if(this.machine.length === 1){
-                const machineMatchup = this.allCookies.filter(cookie=>cookie.category_family === this.machine[0].category_family && cookie.cookie_id !== this.machine[0].cookie_id && this.machine[0].cookie_isendchain !== cookie.cookie_isendchain)
+                const machineMatchup = this.GetSecondCookieForTheMachine(this.machine[0])
                 const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
                 this.machine.push(cookieSelection)
             }else if(this.machine.length === 0){
-                const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort((a, b)=>a.needed - b.needed)[0]
-                const machineMatchup = this.allCookies.filter(cookie=>cookieMostNeeded.category_family === cookie.category_family && cookieMostNeeded.cookie_id !== cookie.cookie_id && cookieMostNeeded.cookie_isendchain !== cookie.cookie_isendchain)
-                const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
+                const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort(this.sortByPercentageNeeds)[0]
+                const machineMatchup = this.GetSecondCookieForTheMachine(cookieMostNeeded)
+                let cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
                 this.machine.push(cookieMostNeeded, cookieSelection)
             }
         }
@@ -83,22 +82,31 @@ class Machine {
         const machineMap = this.machine.map(cookie=>{
             const currentCookie = this.allCookies.find(dbCookie=>cookie.cookie_id === dbCookie.cookie_id)
             if(!currentCookie) return
-            const [amountInKilos, amountInPieces] = this.CalculateWeight(currentCookie)
-            currentCookie.cookie_amount += amountInPieces
-            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${amountInKilos} KG`}
+            const stockPercentage = (currentCookie.cookie_amount / currentCookie.cookie_packaging / currentCookie.needed) * 100
+            const remainCookies = currentCookie.needed * (Math.ceil(130 - stockPercentage))
+            let todoInGrams = Math.ceil(remainCookies / this.kilo) * this.dough
+            let doingInFact = todoInGrams / currentCookie.cookie_weight
+            
+            if(todoInGrams < 1){
+                doingInFact = this.dough / currentCookie.cookie_weight
+                todoInGrams = this.dough
+            }
+            
+            currentCookie.cookie_amount += doingInFact
+            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${todoInGrams / this.kilo} KG`}
         })
         
         const handMap = this.hand.map(cookie=>{
             const currentCookie = this.allCookies.find(dbCookie=>cookie.cookie_id === dbCookie.cookie_id)
             if(!currentCookie) return
             if(this.hand.length < 1){
-                    const [amountInKilos, amountInPieces] = this.CalculateWeight(currentCookie)
-                    currentCookie.cookie_amount += amountInPieces
-                    return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${amountInKilos} KG`}
-                }
-                const pieces = (this.dough / (cookie.cookie_packaging * cookie.cookie_weight)) * cookie.cookie_packaging
-                currentCookie.cookie_amount += pieces
-                return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${this.dough / this.kilo} KG`} 
+                const [amountInKilos, amountInPieces] = this.CalculateWeight(currentCookie)
+                currentCookie.cookie_amount += amountInPieces
+                return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${amountInKilos} KG`}
+            }
+            const pieces = (this.dough / (cookie.cookie_packaging * cookie.cookie_weight)) * cookie.cookie_packaging
+            currentCookie.cookie_amount += pieces
+            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${this.dough / this.kilo} KG`} 
         })
             
         this.list.push(machineMap.concat(handMap))
@@ -108,9 +116,9 @@ class Machine {
         if(day > 4) return ()=>{}
         const cookieDayList: CookieAdvancedTypes[] = []
         for(const cookie of this.sheetData){
-            const id = cookie[cookie.length - 1]
+            const id = cookie[process.env.NODE_ENV === "development" ? cookie.length - 2 : cookie.length - 1]
             const cookieInfos = this.allCookies.find(cookie=>cookie.cookie_id === id)
-            const cookieDayByDay = cookie.slice(1, cookie.length - 1)
+            const cookieDayByDay = cookie.slice(1, cookie.length - 2)
             const weekNeeds = cookieDayByDay.reduce((total, curr)=>total + parseInt(curr), 0)
             let sommeAsked = 0
             if(cookieInfos){
@@ -138,6 +146,15 @@ class Machine {
     private CookieAsked = (cookie: any[], currentPosition: number, end: number, result: number[]):number[]=>{
         if(end === currentPosition) return result
         return this.CookieAsked(cookie, currentPosition + 1, end, result)
+    }
+
+    private GetSecondCookieForTheMachine = (selectedCookie: CookieAdvancedTypes)=>{
+        if(selectedCookie.cookie_isendchain){
+            return this.allCookies.filter(cookie=>selectedCookie.category_family === cookie.category_family && selectedCookie.cookie_id !== cookie.cookie_id && selectedCookie.cookie_isendchain !== cookie.cookie_isendchain)
+        }else{
+            return this.allCookies.filter(cookie=>selectedCookie.category_family === cookie.category_family && selectedCookie.cookie_id !== cookie.cookie_id)
+
+        }
     }
 
     private CalculateWeight = (cookie: CookieAdvancedTypes)=>{

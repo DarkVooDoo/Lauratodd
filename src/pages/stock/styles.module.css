@@ -26,6 +26,22 @@
     font-weight: bold;
 }
 
+.stock_actions_filter{
+    width: 40vw;
+}
+
 .stock_modal{
     width: 70%;
+}
+
+@media screen and (min-width: 768px){
+    .stock_actions_filter{
+        width: 20vw;
+    }
+}
+
+@media screen and (min-width: 992px){
+    .stock_actions_filter{
+        width: 15vw;
+    }
 }

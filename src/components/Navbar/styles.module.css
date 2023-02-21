@@ -53,3 +53,16 @@
     justify-content: center;
     height: var(--Navbar_Link_Height);
 }
+
+
+@media screen and (min-width: 768px){
+    .nav_menu_links{
+        right: calc(0px - var(--Tablet-Page-Padding));
+    }
+}
+
+@media screen and (min-width: 992px){
+    .nav_menu_links{
+        right: calc(0px - var(--Desktop-Page-Padding));
+    }
+}

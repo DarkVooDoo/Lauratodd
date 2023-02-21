@@ -6,17 +6,18 @@ import ToggleButton from "../ToggleButton/ToggleButton"
 import styles from "./styles.module.css"
 
 interface CreateCookieProps {
-    category: string[]
+    category: string[],
+    onSuccess: ()=> void
 }
 
-const CreateCookie:React.FC<CreateCookieProps> = ({category})=>{
+const CreateCookie:React.FC<CreateCookieProps> = ({category, onSuccess})=>{
 
     const [cookie, setCookie] = useState<{[key: string]: {content: string, type?: "text" | "number"}}>({
-        name: {content: ""}, 
-        amount: {content: "0", type: "number"},
-        weight: {content: "50", type: "number"}, 
-        packaging: {content: "100", type: "number"}, 
-        threshold: {content: "100", type: "number"}
+        Nom: {content: ""}, 
+        Quantite: {content: "0", type: "number"},
+        Poids: {content: "50", type: "number"}, 
+        Packaging: {content: "100", type: "number"}, 
+        Marge: {content: "100", type: "number"}
     })
     const [isMachine, setIsMachine] = useState(true)
     const [onMenu, setOnMenu] = useState(true)
@@ -28,18 +29,17 @@ const CreateCookie:React.FC<CreateCookieProps> = ({category})=>{
                 method: "POST",
                 headers: [["Content-Type", "application/json"]],
                 body: JSON.stringify({
-                name: cookie.name.content, 
-                amount: cookie.amount.content,
-                weight: cookie.weight.content,
-                packaging: cookie.packaging.content,
-                threshold: cookie.threshold.content,
+                name: cookie.Nom.content, 
+                amount: cookie.Quantite.content,
+                weight: cookie.Poids.content,
+                packaging: cookie.Packaging.content,
+                threshold: cookie.Marge.content,
                 isMachine, 
                 onMenu,
                 family: Array.from(family)
             })
         })
-        if(createCookie.status === 200) console.log("Success")
-        
+        if(createCookie.status === 200) onSuccess()        
     }
 
     const inputs = Object.entries(cookie).map(item=>{
@@ -67,20 +67,20 @@ const CreateCookie:React.FC<CreateCookieProps> = ({category})=>{
     return (
         <div className={styles.create}>
             <h3 className={styles.create_header}>Ajouter un cookie</h3>  
-            <div className={styles.create_columns}>
-                <div>
-                    <p>Dans la machine</p>
-                    <ToggleButton {...{state: isMachine, onChange: (state)=>setIsMachine(state)}} />
-                </div>
-                <div>
-                    <p>Dans le menu</p>
-                    <ToggleButton {...{state: onMenu, onChange: (state)=>setOnMenu(state)}} />
-                </div>
-            </div>  
             <form onSubmit={onCookieCreation} id="cookie_creation" className={styles.create_form}>
                 <div className={styles.create_form_category}>
                     {myCategorys}
                 </div>
+                <div className={styles.create_columns}>
+                    <div>
+                        <p>Dans la machine</p>
+                        <ToggleButton {...{state: isMachine, onChange: (state)=>setIsMachine(state)}} />
+                    </div>
+                    <div>
+                        <p>Dans le menu</p>
+                        <ToggleButton {...{state: onMenu, onChange: (state)=>setOnMenu(state)}} />
+                    </div>
+                </div>  
                 {inputs}                
             </form>   
             <button type="submit" form="cookie_creation" className={styles.create_btn}>Creer</button>

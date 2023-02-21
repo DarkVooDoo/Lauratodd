@@ -1,6 +1,3 @@
-.cookie{
-    height: 3rem;
-}
 
 .cookie_field{
     height: 100%;
@@ -8,7 +5,7 @@
     border-radius: 5px;
 }
 
-.large_screen{
+.desktop_screen{
     display: none;
 }
 
@@ -21,7 +18,7 @@
 }
 
 @media screen and (min-width: 767px) {
-    .large_screen{
+    .desktop_screen{
         display: block;
         border-radius: 25px;
     }

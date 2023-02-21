@@ -16,7 +16,7 @@ const ToggleButton:React.FC<ToggleButtonProps> = ({state, className, onChange})=
         onChange(!toggleState)
     }
     return (
-        <button className={`${styles.toggle} ${toggleState && styles.toggle_on_color} ${className}`} onClick={onToggleChange}>
+        <button type="button" className={`${styles.toggle} ${toggleState && styles.toggle_on_color} ${className}`} onClick={onToggleChange}>
             <div className={`${styles.toggle_state} ${toggleState && styles.toggle_on}`} />
         </button>
     )

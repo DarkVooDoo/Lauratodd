@@ -14,7 +14,6 @@ const Stock = async (req:NextApiRequest, res:NextApiResponse)=>{
         try{
             const week = await CalculeWeekProduction()
             res.send(week)
-            res.send("Success")
         }catch(e){
             res.status(400).send({status: "Failed"})
         }
