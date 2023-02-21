@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "lauratodd",
+  "private_key_id": "d2c9696b8639b4816b41a19776a7f32e15ec3529",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC9B1SkPBkysXsV\n2QyTNlC1EYKEmhD3Wrk66YTKZgqr38oDof6mOB3UHPnT+FiVoV48riY/3vu04KgC\n9f7477ZUVOKxgm+u0k2dYDdZCS1Gi5oNrLTKTwLCA3fDQMySIElJWYiezfxbfeh0\nuXhxBme/Ma2rcrybU3U6Rb9EcavzfPHRLJBoOnOSPIM20zO7AGX5OglNtx+qfQq+\nRctzXgTNuw6ANDFl/CCqdeCfB5r0dhKafN0eekRvF8pzCiWU09wLuk3BabGRN3r3\n3PogHUVTmQb9V+i1F89ZL7/8banDKbJMqBhewmlU1V8IgrVgaH0sVwsWTk1QDZRp\nvG3smQ+vAgMBAAECggEAQquyO9cCoDGfEx6h485Veve5DCH29/dku5Wfg2+oNeTR\nsKRTV7cVNjoeF5hRTj1DKq3VydNQ/gP63kh7bLvHmEj0R92UnJmKTIaiHuIwuOAG\nLuqKPYzOkTV96T0Sqjt+/cL5f+FxL6fh9EFybJLwxquz8HOgeDxgbXQqOO7K0i7U\n+H7pRqV+iCocMqe36hLBxUKsabaVjAkmxBsdLHspUxNyv2WO2KP7EBh/7K2IXaib\nKYZrTa529t0D60FXb11PnFCaTqdFWI+arjasMRw+vpmrt6DcKEsWjCsfsFJGFWrg\nbGzMSH0h2yPkc3MgWP+SOzmdRdxmTny+TuHjQcSsoQKBgQDpy4w9jAKs+P/7+HxA\nVxGN60Y360rPfjKhYLR+gzkRGhvZ58kGsQFabv8pJfGW9QNFOMYF8Zg+HZfdvTuD\n2elUsDINw5xYk1eQAr1gjjMNYzKrGHexYeskGiTzyl2BWiVqzBWJhSoiIlKNoMG4\nJWD1vLki1lL4uSP4T4kVSenYvwKBgQDO+1a+VmaFiVCA8cSCj1nR11jyqSYBfSoC\nFnS5SjP4zfupeOJxST5Ki5A7wGSrkow135kVcC1zI2T7P618zyRaFju0DiGmpuFx\niFcdWsGbncZ5051QZarISxWbxT1wdPeWy9u5G/aLklt74UB/o1XQ69j0NKqrPfUE\n9D6CIzYVEQKBgCNqumv4cc9SSTUah3gXuIkPQyvlcQfNzk20IKOprVNx6RYxjrp8\nxf+1IOJS5S5BH6W03Aq6dp2yTfdBW2q18CrsJij/oQeqCnG+eIHQCNvWUy6oHjm4\n464sZ7ymw1N9HH35PKoAiklxeaAK4k3LG80eMc2dOiSDp3dOVS3sbIhxAoGAZ/aK\nrXQMbsp36yyEvedvAB2gidI4SsspjH7nBiKlVDVyUL9tTeWyKhNL0Rdj+WHUl0LG\nS6Raz9hZYnGrnGMXKUC9oETw1hpAZpxK1W2+jYGELbEC9Vz7mTtNkT5TC+dUbSPc\nK3BGN/i9hs2vbe0Gr7em85J4nyaxqVldBFTXV2ECgYEAgrdy+9+H8Uc/e8cSdEly\njDQpoAKBe/VZ/nqG5JtdesWZj1EblavGwqjOnM9NuuNBEo9Ns2MtXlS2Avv3qzPv\niS5IlT7tlTCUh+vPo2NHI28AiodN3E/2GibbDtehFzEp3ylvwEySE8LEWUO/BExV\naWQe0ruW979vsCvstiVnBao=\n-----END PRIVATE KEY-----\n",
+  "client_email": "lauratodd@lauratodd.iam.gserviceaccount.com",
+  "client_id": "111937046615617532330",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/lauratodd%40lauratodd.iam.gserviceaccount.com"
+}
