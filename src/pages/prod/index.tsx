@@ -8,7 +8,6 @@ import {DropdownTypes, CookieTypes, ProductionTypes} from "@/helpers/types"
 import { onSubmit ,onRoomChange, onUnitChange } from "@/controllers/production.controller"
 
 import Dropdown from "@/components/Dropdown/Dropdown"
-import TextInput from "@/components/TextInput/TextInput"
 import CookieListItem from "@/components/CookieListItem/CookieListItem"
 import Modal from "@/components/Modal/Modal"
 
@@ -126,7 +125,7 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
 }
 
 export const getServerSideProps:GetServerSideProps = async ({req})=>{
-    const fetchData = await fetch(`http://localhost:3000/api/production`)
+    const fetchData = await fetch(`${process.env.URL}/api/production`)
     const data = await fetchData.json() as {room: DropdownTypes, cookies: CookieTypes[]}
     const {room, unit} = req.cookies
     return {
