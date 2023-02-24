@@ -18,9 +18,14 @@ const StockListItem:React.FC<StockListItemProps> = ({cookie_id, cookie_name, coo
     const [threshold, setThreshold] = useState(cookie_threshold.toString())
 
     useEffect(()=>{
-        if(cookie_weight.toString() !== weight || cookie_amount.toString() !== amount || isMachine !== cookie_ismachine || onMenu !== cookie_onmenu) return onListChange(cookie_id, {weight, amount, isMachine, onMenu}, true)
-        onListChange(cookie_id, {weight, amount, isMachine, onMenu}, false)
-    }, [weight, amount, onMenu, isMachine])
+        if(
+            cookie_weight.toString() !== weight || 
+            cookie_amount.toString() !== amount || 
+            cookie_ismachine !== isMachine || 
+            onMenu !== cookie_onmenu || 
+            threshold !== cookie_threshold.toString()) return onListChange(cookie_id, {weight, amount, isMachine, onMenu, threshold}, true)
+        onListChange(cookie_id, {weight, amount, isMachine, onMenu, threshold}, false)
+    }, [weight, amount, onMenu, isMachine, threshold])
 
     return (
         <div className={styles.cookie}>

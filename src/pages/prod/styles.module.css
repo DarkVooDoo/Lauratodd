@@ -46,6 +46,11 @@
     border: 1px solid black;
 }
 
+.prod_modal_buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
 .prod_modal_buttons_btn{
     height: 2rem;
     width: 45%;

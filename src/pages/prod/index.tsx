@@ -24,19 +24,11 @@ interface ProductionProps {
 const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, room, unit})=>{
     const units = ["Bac", "Piece"]
 
-    const [unitType, setUnitType] = useState(unit ? unit : units[0])
     const [currentRoom, setCurrentRoom] = useState(room ? room : "Prod")
     const [currentCookie, setCurrentCookie] = useState({id: cookies[0].cookie_id, name: cookies[0].cookie_name, packaging: cookies[0].cookie_packaging})
     const [newCookie, setNewCookie] = useState<{id: string, piece: string, bac: string}>({id: "", piece: "0", bac: "0"})
     const [list, setList] = useState<Map<string, ProductionTypes>>(new Map())
     const [modal, setModal] = useState(false)
-
-    const unitTypes = units.map(item=>(
-        <div key={Math.random()}>
-            <label htmlFor={item}>{item} </label>
-            <input type="radio" name="unit" id={item} checked={unitType === item} onChange={({currentTarget:{id}})=>setUnitType(onUnitChange(id))} />
-        </div>
-    ))
 
     const listOfCookies = Array.from(list.values()).map((cookie, index)=><CookieListItem key={Math.random()} 
     {...{...cookie, 
@@ -44,6 +36,8 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
         className: currentRoom === "Cuisson" ? "warning" : "good", 
         onEdit: (id)=>{
             const cookie = list.get(id)
+            const dropdownCookie = cookies.find(cookie=>cookie.cookie_id === id)
+            setCurrentCookie({id, name: dropdownCookie!.cookie_name, packaging: dropdownCookie!.cookie_packaging})
             setNewCookie({id: cookie?.id || "", piece: cookie?.piece.toString() || "0", bac: cookie?.bac.toString() || "0"})
             setModal(true)
         },

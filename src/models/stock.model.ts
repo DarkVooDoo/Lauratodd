@@ -17,9 +17,9 @@ export const GetStock = async ()=>{
 }
 
 export const UpdateStock = async (changes: [string, StockChangesTypes][])=>{
-    for(const [id, {amount, weight, isMachine, onMenu}] of changes){
+    for(const [id, {amount, weight, isMachine, onMenu, threshold}] of changes){
         try{
-            await Pool().query(`UPDATE Cookie SET cookie_amount=$2, cookie_weight=$3, cookie_ismachine=$4, cookie_onmenu=$5  WHERE cookie_id=$1`, [id, amount, weight, isMachine, onMenu])
+            await Pool().query(`UPDATE Cookie SET cookie_amount=$2, cookie_weight=$3, cookie_ismachine=$4, cookie_onmenu=$5, cookie_threshold=$6  WHERE cookie_id=$1`, [id, amount, weight, isMachine, onMenu, threshold])
         }catch(e){
             throw("Error")
         }

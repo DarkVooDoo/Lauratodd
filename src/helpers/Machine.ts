@@ -23,7 +23,7 @@ class Machine {
         }
     }
 
-    private createDay = (dayList: CookieAdvancedTypes[])=>{
+    private createDay = (dayList: CookieAdvancedTypes[], currentDay: number)=>{
         let isLait = 0  
         let isNoir = 0
         let isBlanc = 0
@@ -57,11 +57,14 @@ class Machine {
         if(this.machine.length === 1){
             const machineMatchup = this.GetSecondCookieForTheMachine(this.machine[0])
             const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
+            this.CookieNeeds([cookieSelection], currentDay)
+
             this.machine.push(cookieSelection)
         }else if(this.machine.length === 0){
             const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort(this.sortByPercentageNeeds)[0]
             const machineMatchup = this.GetSecondCookieForTheMachine(cookieMostNeeded)
             const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
+            this.CookieNeeds([cookieSelection, cookieMostNeeded], currentDay)
             this.machine.push(cookieMostNeeded, cookieSelection)
         }
         
@@ -83,14 +86,13 @@ class Machine {
             const remainCookies = currentCookie.needed * (Math.ceil(130 - stockPercentage))
             let todoInGrams = Math.ceil(remainCookies / this.kilo) * this.dough
             let doingInFact = todoInGrams / currentCookie.cookie_weight
-            
             if(todoInGrams < 1){
                 doingInFact = this.dough / currentCookie.cookie_weight
                 todoInGrams = this.dough
             }
-            
-            currentCookie.cookie_amount += doingInFact
-            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${todoInGrams / this.kilo} KG`}
+            currentCookie.cookie_amount += doingInFact 
+            const left = Math.floor((currentCookie.cookie_amount - (cookie.sommeAsked || 0)) / cookie.cookie_packaging)
+            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${todoInGrams / this.kilo} KG(M)`, left}
         })
         
         const handMap = this.hand.map(cookie=>{
@@ -99,11 +101,13 @@ class Machine {
             if(this.hand.length < 1){
                 const [amountInKilos, amountInPieces] = this.CalculateWeight(currentCookie)
                 currentCookie.cookie_amount += amountInPieces
-                return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${amountInKilos} KG`}
+                const left = Math.floor((currentCookie.cookie_amount - (cookie.sommeAsked || 0)) / cookie.cookie_packaging)
+                return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${amountInKilos} KG`, left}
             }
             const pieces = (this.dough / (cookie.cookie_packaging * cookie.cookie_weight)) * cookie.cookie_packaging
             currentCookie.cookie_amount += pieces
-            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${this.dough / this.kilo} KG`} 
+            const left = Math.floor((currentCookie.cookie_amount - (cookie.sommeAsked || 0)) / cookie.cookie_packaging)
+            return {id: currentCookie.cookie_id, name: currentCookie.cookie_name, amount: `${this.dough / this.kilo} KG`, left} 
         })
             
         this.list.push(machineMap.concat(handMap))
@@ -124,11 +128,11 @@ class Machine {
                     sommeAsked += cookieDayByDay[i] * cookieInfos.cookie_packaging
                 }
                 if(sommeAsked + cookieInfos.cookie_threshold > cookieInfos.cookie_amount){
-                    cookieDayList.push({...cookieInfos, needed: weekNeeds})
+                    cookieDayList.push({...cookieInfos, needed: weekNeeds, sommeAsked})
                 }
             }
         }
-        this.createDay(cookieDayList)
+        this.createDay(cookieDayList, day)
         return this.CookieCalculation(day + 1)
             
     }
@@ -160,6 +164,24 @@ class Machine {
         const kilos = totalInGram / this.kilo
         const piecesAmount = (totalInGram / cookieBoxWeight) * cookie.cookie_packaging
         return [kilos, piecesAmount]
+    }
+
+    private CookieNeeds = (allCookies: CookieAdvancedTypes[], currentDay: number)=>{
+        for(const selectedCookie of allCookies){
+            for(const cookie of this.sheetData){
+                const id = cookie[process.env.NODE_ENV === "development" ? cookie.length - 2 : cookie.length - 1]
+                if(id === selectedCookie.cookie_id){
+                    const cookieDayByDay = cookie.slice(1, cookie.length - 2)
+                    const weekNeeds = cookieDayByDay.reduce((total, curr)=>total + parseInt(curr), 0)
+                    let sommeAsked = 0
+                    for(let i = 0; i < currentDay + 1; i++){
+                        sommeAsked += cookieDayByDay[i] * selectedCookie.cookie_packaging
+                    }
+                    selectedCookie.sommeAsked = sommeAsked
+                    break
+                }
+            }
+        }
     }
 }
     

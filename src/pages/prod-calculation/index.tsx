@@ -52,14 +52,16 @@ const ProdCalculation:React.FC = ()=>{
 
 interface DoughProps{
     name: string,
-    amount: string
+    amount: string,
+    left: number
 }
 
-const Dough:React.FC<DoughProps> = ({name, amount})=>{
+const Dough:React.FC<DoughProps> = ({name, amount, left})=>{
     return (
         <div>
             <p>{name} </p>
             <p>{amount} </p>
+            <p title={`Il vous reste ${left} bac(s)`}>{left} </p>
         </div>
     )
 }

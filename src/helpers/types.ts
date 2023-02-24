@@ -24,7 +24,8 @@ export interface StockChangesTypes{
     weight: string, 
     amount: string,
     isMachine: boolean,
-    onMenu: boolean
+    onMenu: boolean,
+    threshold: string
 }
 
 export interface CookieAdvancedTypes extends CookieTypes{
@@ -32,13 +33,15 @@ export interface CookieAdvancedTypes extends CookieTypes{
     cookie_ratio: number,
     cookie_isendchain: boolean,
     category_family: "Lait" | "Noir" | "Blanc" | "None",
-    needed: number
+    needed: number,
+    sommeAsked: number | undefined
 }
 
 export type ProdDayTypes = {
     id: string,
     name: string,
-    amount: string
+    amount: string,
+    left: number
 } 
 
 export type ProductionTypes = {
