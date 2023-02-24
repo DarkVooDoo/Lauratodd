@@ -3,6 +3,7 @@ import {useState} from "react"
 import { ProdDayTypes } from "@/helpers/types"
 
 import ListWithHeader from "@/components/ListWithHeader/ListWithHeader"
+import Head from "next/head"
 
 const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
  
@@ -34,10 +35,18 @@ const ProdCalculation:React.FC = ()=>{
     })
 
     return (
-        <main>
-            <button onClick={onCalculeProd}>Calcule</button>
-            {prodToMake}
-        </main>
+        <>
+            <Head>
+                <title>Semaine estimation</title>
+                <meta name="description" content="Laura todd semaine estimation" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <main>
+                <button onClick={onCalculeProd}>Calcule</button>
+                {prodToMake}
+            </main>
+        </>
     )
 }
 

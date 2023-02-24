@@ -1,28 +1,66 @@
 .prod_header{
     display: flex;
     justify-content: space-between;
-    margin-bottom: var(--Rows_Margin);
 }
 
 .prod_header_room{
     width: 35%;
 }
 
-.prod_cookieSelection{
-    display: flex;
-    align-items: center;
-    gap: .5rem;
+.prod_newBtn{
+    width: 100%;
+    height: 2.5rem;
+    color: black;
+}
+
+.prod_modal{
+    width: 80%;
+}
+
+.prod_modal_content > *{
     margin-bottom: var(--Rows_Margin);
 }
 
-.prod_cookieSelection_name{
-    width: 70%;
+.prod_modal_content_header{
+    text-align: center;
 }
 
-.prod_cookieSelection_types{
-    width: 30%;
+.prod_actions{
     display: flex;
+    height: 3rem;
     justify-content: space-between;
+}
+
+.prod_actions_newBtn{
+    width: 70%;
+    border: 1px solid black;
+}
+
+.prod_actions_saveBtn{
+    width: 3rem;
+    height: 3rem;
+}
+
+.prod_actions_saveBtn, .prod_actions_newBtn{
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.prod_modal_buttons_btn{
+    height: 2rem;
+    width: 45%;
+    border-radius: 5px;
+    color: transparent;
+}
+
+.cancel_btn{
+    border: 1px solid red;
+    color: red
+}
+
+.confirm_btn{
+    border: 1px solid green;
+    color: green
 }
 
 .prod_submit{
@@ -41,5 +79,37 @@
     font-weight: bold;
     -webkit-box-shadow: 0px 0px 3px 1px #000000; 
     box-shadow: 0px 0px 3px 1px #000000;
-    
+}
+
+.prod_edit_field{
+    margin-top: var(--Rows_Margin);
+    height: 2rem;
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.prod_edit_field_input{
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    padding: 0 .3rem;
+
+}
+
+@media screen and (min-width: 768px){
+    .prod_modal{
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 1199px){
+    .prod_actions{
+        height: 2.5rem;
+    }   
+
+    .prod_actions_saveBtn{
+        height: 2.5rem;
+        width: 2.5rem;
+    }
 }

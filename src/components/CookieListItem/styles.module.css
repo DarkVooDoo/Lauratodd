@@ -1,6 +1,7 @@
 .prod_list_item{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 4rem;
     border-radius: 5px;
     padding: .3rem;
@@ -16,17 +17,12 @@
     width: 80%;
 }
 
-.prod_list_item_actions{
-    display: flex;
-    height: 2rem;
-    gap: .5rem;
-}
-
 .prod_list_item_actions_btn{
-    height: 100%;
-    width: 2rem;
-    border-radius: 5px;
-    border: 2px solid black;
+    height: calc(4rem * .8);
+    width: calc(4rem * .8);
+    border-radius: 50%;
+    border: 2px solid darkgray;
+    background-color: lightgray;
     display: flex;
     justify-content: center;
     align-items: center;

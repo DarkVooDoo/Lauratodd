@@ -4,7 +4,7 @@
     --BlueSky_Color: #0496FF;
     --Mobile-Page-Padding: .5rem;
     --Tablet-Page-Padding: 3rem;
-    --Desktop-Page-Padding: 10rem;
+    --Desktop-Page-Padding: 15rem;
     --Desktop_Min_Width: 992px;
     --Tablet_Min_Width: 768px;
   
@@ -31,6 +31,10 @@ body {
 main{
     padding: var(--Mobile-Page-Padding);
     min-height: calc(100vh - var(--Navbar_Height) - var(--Footer_Height));
+}
+
+main > *{
+    margin-bottom: var(--Rows_Margin);
 }
 
 input, textarea{

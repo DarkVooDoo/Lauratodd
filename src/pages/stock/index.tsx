@@ -76,7 +76,7 @@ const Stock:React.FC<NameProps> = ({stock, category})=>{
                 <>{myStock}</>
             </ListWithHeader>
             {isModalOpen && 
-            <Modal {...{state: isModalOpen, className: styles.stock_modal, onChange: (state)=>setIsModalOpen(state)}}>
+            <Modal {...{state: isModalOpen, className: styles.stock_modal, onModalStateChange: (state)=>setIsModalOpen(state)}}>
                 <CreateCookie {...{category, onSuccess: ()=>setIsModalOpen(false)}} />
             </Modal>}
         </main>

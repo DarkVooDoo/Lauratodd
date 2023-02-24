@@ -41,15 +41,11 @@ export type ProdDayTypes = {
     amount: string
 } 
 
-export type ProductionListType = {
-    cookie_id: string, 
-    cookie_name: string, 
-    cookie_amount: number
-}
-
-export type CookieTotal = {
+export type ProductionTypes = {
     id: string,
     name: string,
+    piece: number,
+    bac: number,
     amount: number
 }
 

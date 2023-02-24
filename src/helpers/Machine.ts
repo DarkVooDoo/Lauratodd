@@ -54,22 +54,19 @@ class Machine {
             this.hand = dayList.filter(cookie=>cookie.category_family !== "Noir")
         }
   
-        if(this.machine.length < 2){
-            if(this.machine.length === 1){
-                const machineMatchup = this.GetSecondCookieForTheMachine(this.machine[0])
-                const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
-                this.machine.push(cookieSelection)
-            }else if(this.machine.length === 0){
-                const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort(this.sortByPercentageNeeds)[0]
-                const machineMatchup = this.GetSecondCookieForTheMachine(cookieMostNeeded)
-                let cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
-                this.machine.push(cookieMostNeeded, cookieSelection)
-            }
+        if(this.machine.length === 1){
+            const machineMatchup = this.GetSecondCookieForTheMachine(this.machine[0])
+            const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
+            this.machine.push(cookieSelection)
+        }else if(this.machine.length === 0){
+            const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort(this.sortByPercentageNeeds)[0]
+            const machineMatchup = this.GetSecondCookieForTheMachine(cookieMostNeeded)
+            const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
+            this.machine.push(cookieMostNeeded, cookieSelection)
         }
-
+        
         const machineEndCookies = this.machine.filter(cookie=>cookie.cookie_isendchain)
         if(machineEndCookies.length > 1){
-            //Good
             const chosenCookie = machineEndCookies.sort(this.sortByPercentageNeeds)
             chosenCookie.forEach((cookie, index)=>{
                 if(index < 1) return

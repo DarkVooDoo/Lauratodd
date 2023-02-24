@@ -19,7 +19,7 @@ const TextInput:React.FC<test> = ({type = "text", onConfirm})=>{
     return (
         <div className={styles.container}>
             <div className={styles.container_input}>
-                <input className={styles.container_input_field} type={type} name="amount" id="amount" required value={value}
+                <input className={styles.container_input_field} type={type} autoComplete="off" name="amount" id="amount" required value={value}
                 onKeyDown={({key})=>{
                     if(key !== "Enter" || parseInt(value) < 1 || !value) return
                     onConfirm(value ? value : "0")
