@@ -17,7 +17,7 @@
     width: 80%;
 }
 
-.prod_modal_content > *{
+.prod_modal_content > *, .prod_modal_content_form > *{
     margin-bottom: var(--Rows_Margin);
 }
 
@@ -27,23 +27,26 @@
 
 .prod_actions{
     display: flex;
-    height: 3rem;
+    height: 2.5rem;
     justify-content: space-between;
 }
 
 .prod_actions_newBtn{
     width: 70%;
-    border: 1px solid black;
+    color: var(--BlueSky_Color);
+    font-weight: bold;
+    border: 1px solid var(--BlueSky_Color);
 }
 
 .prod_actions_saveBtn{
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--BlueSky_Color);
+    color: white;
 }
 
 .prod_actions_saveBtn, .prod_actions_newBtn{
     border-radius: 10px;
-    border: 1px solid black;
 }
 
 .prod_modal_buttons{

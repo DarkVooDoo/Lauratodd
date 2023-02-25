@@ -1,4 +1,5 @@
 
+import { useState } from "react"
 import styles from "./styles.module.css"
 
 interface ListWithHeaderProps {
@@ -10,10 +11,9 @@ interface ListWithHeaderProps {
 const ListWithHeader:React.FC<ListWithHeaderProps> = ({headers, children})=>{
  
     const myHeaders = headers.map((item, index, array)=>{
-
         return (
             <div key={Math.random()} >
-                <p>{item}</p>
+                <p>{item} </p>
             </div>
         )
     })

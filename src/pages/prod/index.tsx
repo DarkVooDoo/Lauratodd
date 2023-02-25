@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { FormEventHandler, useState } from "react"
 import Head from "next/head"
 import { GetServerSideProps } from "next"
 import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome"
 import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons"
 
 import {DropdownTypes, CookieTypes, ProductionTypes} from "@/helpers/types"
-import { onSubmit ,onRoomChange, onUnitChange } from "@/controllers/production.controller"
+import { onSubmit ,onRoomChange } from "@/controllers/production.controller"
 
 import Dropdown from "@/components/Dropdown/Dropdown"
 import CookieListItem from "@/components/CookieListItem/CookieListItem"
@@ -16,19 +16,26 @@ interface ProductionProps {
     rooms: DropdownTypes,
     dropdownCookies: DropdownTypes,
     cookies: CookieTypes[],
-    room: string | undefined,
-    unit: string | undefined
+    room: string | undefined
 
 }
 
-const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, room, unit})=>{
-    const units = ["Bac", "Piece"]
+const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, room})=>{
 
     const [currentRoom, setCurrentRoom] = useState(room ? room : "Prod")
     const [currentCookie, setCurrentCookie] = useState({id: cookies[0].cookie_id, name: cookies[0].cookie_name, packaging: cookies[0].cookie_packaging})
     const [newCookie, setNewCookie] = useState<{id: string, piece: string, bac: string}>({id: "", piece: "0", bac: "0"})
     const [list, setList] = useState<Map<string, ProductionTypes>>(new Map())
     const [modal, setModal] = useState(false)
+
+    const onAddCookie:FormEventHandler = (e)=>{
+        e.preventDefault()
+        const amount = parseInt(newCookie?.bac || "0") * currentCookie.packaging + parseInt(newCookie?.piece || "0")
+        if(amount < 1) return
+        list.set(currentCookie.id, {id: currentCookie.id, name: currentCookie.name, amount, piece: parseInt(newCookie.piece), bac: parseInt(newCookie.bac)})
+        setList(new Map(list.entries()))
+        setNewCookie({bac: "0", piece: "0", id: currentCookie.id})
+    }
 
     const listOfCookies = Array.from(list.values()).map((cookie, index)=><CookieListItem key={Math.random()} 
     {...{...cookie, 
@@ -88,28 +95,24 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
                             className: `${styles.prod_cookieSelection_name}`,
                             onChange: (id, name)=>setCurrentCookie({id, name, packaging: cookies[cookies.findIndex(item=>item.cookie_id === id)].cookie_packaging})
                         }} />
-                        <label htmlFor="bac">Nombre de bacs</label>
-                        <div className={styles.prod_edit_field}>
-                            <input type="number" name="bac" id="bac" className={styles.prod_edit_field_input} value={newCookie?.bac} onChange={({target:{value}})=>{
-                                setNewCookie({id: currentCookie.id, bac: value, piece: newCookie?.piece || "0"})
-                            }} />
-                        </div>
-                        <label htmlFor="piece">Nombre de pieces</label>
-                        <div className={styles.prod_edit_field}>
-                            <input type="number" name="piece" id="piece" className={styles.prod_edit_field_input} value={newCookie?.piece} onChange={({target:{value}})=>{
-                                setNewCookie({id: currentCookie.id, bac: newCookie?.bac || "0", piece: value})
-                            }} />
-                        </div>
-                        <div className={styles.prod_modal_buttons}>
-                            <button className={`${styles.prod_modal_buttons_btn} ${styles.cancel_btn}`} onClick={()=>{setModal(false)}}>Non</button>
-                            <button className={`${styles.prod_modal_buttons_btn} ${styles.confirm_btn}`} onClick={()=>{
-                                const amount = parseInt(newCookie?.bac || "0") * currentCookie.packaging + parseInt(newCookie?.piece || "0")
-                                if(amount < 1) return
-                                list.set(currentCookie.id, {id: currentCookie.id, name: currentCookie.name, amount, piece: parseInt(newCookie.piece), bac: parseInt(newCookie.bac)})
-                                setList(new Map(list.entries()))
-                                setModal(false)
-                            }}>Oui</button>
-                        </div>
+                        <form className={styles.prod_modal_content_form} onSubmit={onAddCookie}>
+                            <label htmlFor="bac">Nombre de bacs</label>
+                            <div className={styles.prod_edit_field}>
+                                <input type="number" name="bac" id="bac" className={styles.prod_edit_field_input} value={newCookie?.bac} onChange={({target:{value}})=>{
+                                    setNewCookie({id: currentCookie.id, bac: value, piece: newCookie?.piece || "0"})
+                                }} />
+                            </div>
+                            <label htmlFor="piece">Nombre de pieces</label>
+                            <div className={styles.prod_edit_field}>
+                                <input type="number" name="piece" id="piece" className={styles.prod_edit_field_input} value={newCookie?.piece} onChange={({target:{value}})=>{
+                                    setNewCookie({id: currentCookie.id, bac: newCookie?.bac || "0", piece: value})
+                                }} />
+                            </div>
+                            <div className={styles.prod_modal_buttons}>
+                                <button type="button" className={`${styles.prod_modal_buttons_btn} ${styles.cancel_btn}`} onClick={()=>{setModal(false)}}>Non</button>
+                                <button type="submit" className={`${styles.prod_modal_buttons_btn} ${styles.confirm_btn}`} onClick={onAddCookie}>Oui</button>
+                            </div>
+                        </form>
                     </div>
                 </Modal>}
             </main>
@@ -121,9 +124,9 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
 export const getServerSideProps:GetServerSideProps = async ({req})=>{
     const fetchData = await fetch(`${process.env.URL}/api/production`)
     const data = await fetchData.json() as {room: DropdownTypes, cookies: CookieTypes[]}
-    const {room, unit} = req.cookies
+    const {room} = req.cookies
     return {
-        props: {...data, room, unit}
+        props: {...data, room}
     }
 }
 

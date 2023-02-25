@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 
 import { ProdDayTypes } from "@/helpers/types"
 
@@ -26,7 +26,7 @@ const ProdCalculation:React.FC = ()=>{
                 {day.length > 0 ? 
                 <>
                     <h1>{DAYS[index]} </h1>
-                    <ListWithHeader {...{headers: ["Nom", "Qté"]}}>
+                    <ListWithHeader {...{headers: ["Nom", "Qté", "Bac Restant"]}}>
                         <>{dayToMake}</>
                     </ListWithHeader> 
                 </>: null}
@@ -37,7 +37,7 @@ const ProdCalculation:React.FC = ()=>{
     return (
         <>
             <Head>
-                <title>Semaine estimation</title>
+                <title>Estimation</title>
                 <meta name="description" content="Laura todd semaine estimation" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />

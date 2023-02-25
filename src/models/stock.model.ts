@@ -29,7 +29,10 @@ export const UpdateStock = async (changes: [string, StockChangesTypes][])=>{
 export const CalculeWeekProduction = async ()=>{
     try{
         const {rows:cookies} = await Pool().query<CookieAdvancedTypes>(`SELECT cookie_name, cookie_amount, cookie_weight, cookie_threshold, cookie_ratio, cookie_id, cookie_created, cookie_ismachine, cookie_packaging, category_family, cookie_isendchain FROM Cookie LEFT JOIN Category ON category_cookie_id=cookie_id ORDER BY cookie_name ASC`)
-        const auth = await google.auth.getClient({keyFilename: process.env.SHEET_CREDENTIALS, scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"]})
+        const auth = new google.auth.GoogleAuth({
+            credentials: JSON.parse(process.env.SHEET_CREDENTIALS || ""),
+            scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+        })
         const sheet = google.sheets({version: "v4", auth})
         const response = await sheet.spreadsheets.values.get({
             spreadsheetId: process.env.SHEET_ID,

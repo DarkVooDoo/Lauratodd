@@ -13,6 +13,7 @@ import Modal from "@/components/Modal/Modal"
 import CreateCookie from "@/components/CreateCookie/CreateCookie"
 
 import styles from "./styles.module.css"
+import Head from "next/head"
 
 interface NameProps {
     stock: CookieTypes[],
@@ -51,35 +52,43 @@ const Stock:React.FC<NameProps> = ({stock, category})=>{
     }
     const myStock = stock.map(cookie=><StockListItem key={cookie.cookie_id} {...{...cookie, onListChange}} />)
     return (
-        <main>
-            <div className={styles.stock_top}>
-                <h1>Stock</h1>
-                <button 
-                onClick={onUpdateStock} 
-                disabled={!hasChange}
-                style={{backgroundColor: `${hasChange ? "var(--Primary_Color)" : "lightgray"}`}}
-                className={styles.stock_top_updateBtn}>
-                    <Icon {...{icon: faCloudArrowUp, size: '1x'}} />
-                </button>
-            </div>
-            <div className={styles.stock_actions}>
-                <button className={styles.stock_actions_newBtn} onClick={()=>setIsModalOpen(true)}>Nouveau cookie</button>
-                <Dropdown {...{
-                    items: Array.from<{id: string, name: string, icon?: JSX.Element}>(SortBy.values()), 
-                    value: selectedFilter.name,
-                    className: styles.stock_actions_filter,
-                    onChange:(id)=>{
-                        setSelectedFilter(SortBy.get(id))
-                }}} />
-            </div>
-            <ListWithHeader {...{headers: ["Nom", "Qté", "Au Menu", "Poids", "Marge", "Machine"]}}>
-                <>{myStock}</>
-            </ListWithHeader>
-            {isModalOpen && 
-            <Modal {...{state: isModalOpen, className: styles.stock_modal, onModalStateChange: (state)=>setIsModalOpen(state)}}>
-                <CreateCookie {...{category, onSuccess: ()=>setIsModalOpen(false)}} />
-            </Modal>}
-        </main>
+        <>
+            <Head>
+                <title>Stock</title>
+                <meta name="description" content="Laura todd" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <main>
+                <div className={styles.stock_top}>
+                    <h1>Stock</h1>
+                    <button 
+                    onClick={onUpdateStock} 
+                    disabled={!hasChange}
+                    style={{backgroundColor: `${hasChange ? "var(--Primary_Color)" : "lightgray"}`}}
+                    className={styles.stock_top_updateBtn}>
+                        <Icon {...{icon: faCloudArrowUp, size: '1x'}} />
+                    </button>
+                </div>
+                <div className={styles.stock_actions}>
+                    <button className={styles.stock_actions_newBtn} onClick={()=>setIsModalOpen(true)}>Nouveau cookie</button>
+                    <Dropdown {...{
+                        items: Array.from<{id: string, name: string, icon?: JSX.Element}>(SortBy.values()), 
+                        value: selectedFilter.name,
+                        className: styles.stock_actions_filter,
+                        onChange:(id)=>{
+                            setSelectedFilter(SortBy.get(id))
+                    }}} />
+                </div>
+                <ListWithHeader {...{headers: ["Nom", "Qté", "Au Menu", "Poids", "Marge", "Machine"]}}>
+                    <>{myStock}</>
+                </ListWithHeader>
+                {isModalOpen && 
+                <Modal {...{state: isModalOpen, className: styles.stock_modal, onModalStateChange: (state)=>setIsModalOpen(state)}}>
+                    <CreateCookie {...{category, onSuccess: ()=>setIsModalOpen(false)}} />
+                </Modal>}
+            </main>
+        </>
     )
 }
 
