@@ -41,6 +41,10 @@ const Stock:React.FC<NameProps> = ({stock, category})=>{
         if(updateStock.status === 200) route.push("/")
     }
 
+    const onCopy = async (id: string)=>{
+        await navigator.clipboard.writeText(id)
+    }
+
     const onListChange = (id:string, value: StockChangesTypes, hasChange: boolean)=>{
         if(hasChange) setChanges(changes.set(id, value))
         else{
@@ -50,7 +54,7 @@ const Stock:React.FC<NameProps> = ({stock, category})=>{
         if(changes.size > 0) setHasChange(true)
         else setHasChange(false)
     }
-    const myStock = stock.map(cookie=><StockListItem key={cookie.cookie_id} {...{...cookie, onListChange}} />)
+    const myStock = stock.map(cookie=><StockListItem key={cookie.cookie_id} {...{...cookie, onListChange, onCopy}} />)
     return (
         <>
             <Head>
@@ -73,6 +77,7 @@ const Stock:React.FC<NameProps> = ({stock, category})=>{
                 <div className={styles.stock_actions}>
                     <button className={styles.stock_actions_newBtn} onClick={()=>setIsModalOpen(true)}>Nouveau cookie</button>
                     <Dropdown {...{
+                        id: "cookies",
                         items: Array.from<{id: string, name: string, icon?: JSX.Element}>(SortBy.values()), 
                         value: selectedFilter.name,
                         className: styles.stock_actions_filter,

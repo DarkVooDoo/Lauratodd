@@ -4,9 +4,7 @@
     --BlueSky_Color: #0496FF;
     --Mobile-Page-Padding: .5rem;
     --Tablet-Page-Padding: 3rem;
-    --Desktop-Page-Padding: 15rem;
-    --Desktop_Min_Width: 992px;
-    --Tablet_Min_Width: 768px;
+    --Desktop-Page-Padding: 8rem;
   
     --Button_Border_Radius: 5px;
     --Navbar_Height: 3rem;
@@ -29,6 +27,7 @@ body {
 }
 
 main{
+    position: relative;
     padding: var(--Mobile-Page-Padding);
     min-height: calc(100vh - var(--Navbar_Height) - var(--Footer_Height));
 }
@@ -91,7 +90,7 @@ button{
     }
 }
 
-@media screen and (min-width: 992px){
+@media screen and (min-width: 1025px){
     main{
         padding: var(--Mobile-Page-Padding) var(--Desktop-Page-Padding)
     }

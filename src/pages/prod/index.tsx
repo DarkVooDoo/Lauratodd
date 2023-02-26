@@ -66,7 +66,8 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
                     <h1>Production</h1>
                     <Dropdown {...{
                         value: currentRoom, 
-                        items: rooms, 
+                        items: rooms,
+                        id: "rooms",
                         className: `${styles.prod_header_room}`, 
                         onChange: (_, value)=>{
                         setCurrentRoom(onRoomChange(value))
@@ -91,6 +92,7 @@ const Production:React.FC<ProductionProps> = ({rooms, dropdownCookies, cookies, 
                         <h3 className={styles.prod_modal_content_header}>Ajouter un cookie</h3>
                         <Dropdown {...{
                             value: currentCookie.name, 
+                            id: "cookies",
                             items: dropdownCookies, 
                             className: `${styles.prod_cookieSelection_name}`,
                             onChange: (id, name)=>setCurrentCookie({id, name, packaging: cookies[cookies.findIndex(item=>item.cookie_id === id)].cookie_packaging})

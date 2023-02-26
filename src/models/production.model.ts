@@ -16,7 +16,7 @@ export const GetProductionData = async ()=>{
     }
 }
 
-export const CalculateProduction = async ({room, payload}:{room: string, payload: ProductionTypes[]})=>{
+export const SaveProduction = async ({room, payload}:{room: string, payload: ProductionTypes[]})=>{
     try{
         for(let cookie of payload){
             if(room === "Cuisson") await Pool().query(`UPDATE Cookie SET cookie_amount = cookie_amount - $1 WHERE cookie_id=$2`, [cookie.amount, cookie.id])

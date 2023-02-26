@@ -1,3 +1,6 @@
+import Image from "next/image"
+
+import styles from "./styles.module.css"
 interface ProdResumeListProps {
     id: string,
     name: string,
@@ -6,12 +9,7 @@ interface ProdResumeListProps {
     onEdit?: (id: string)=> void,
     onRemove?: (id: string)=> void
 }
-
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faTrash} from "@fortawesome/free-solid-svg-icons"
  
-import styles from "./styles.module.css"
-
 const ProdResumeList:React.FC<ProdResumeListProps> = ({name, amount, id, onRemove, onEdit, className})=>{
 
     return (
@@ -22,7 +20,7 @@ const ProdResumeList:React.FC<ProdResumeListProps> = ({name, amount, id, onRemov
             </div>
             <div className={styles.prod_list_item_actions}>
                 <div className={styles.prod_list_item_actions_btn} onClick={()=>onRemove && onRemove(id)}>
-                    <FontAwesomeIcon {...{icon: faTrash, size: "1x"}} />
+                    <Image src={"trash.svg"} alt="delete" height={25} width={25} />
                 </div>
             </div>
      

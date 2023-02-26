@@ -1,5 +1,5 @@
 
-import {Roboto} from "@next/font/google"
+import {Roboto} from "next/font/google"
 
 import Navbar from '@/components/Navbar/navbar'
 import Footer from "./Footer/footer"

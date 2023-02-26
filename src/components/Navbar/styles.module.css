@@ -41,28 +41,48 @@
     right: calc(0px - var(--Mobile-Page-Padding));
     top: calc(var(--Navbar_Height) - (var(--Mobile-Page-Padding) / 1.8));
     width: 100vw;
-    background-color: lightgray;
+    background-color: var(--Primary_Color);
     transform-origin: top;
     overflow: hidden;
     transition: height .3s;
 }
 
 .nav_menu_links_row{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     height: var(--Navbar_Link_Height);
+    transition: all .5s;
+}
+
+.nav_menu_links_row:hover{
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.nav_large_screen{
+    display: none;
 }
 
 
 @media screen and (min-width: 768px){
-    .nav_menu_links{
-        right: calc(0px - var(--Tablet-Page-Padding));
+    .nav_menu{
+        display: none;
     }
+
+    .nav_large_screen{
+        display: flex;
+        gap: 2rem;
+    }
+
+    .current_page{
+        font-weight: bold;
+    }
+    
+
 }
 
 @media screen and (min-width: 992px){
-    .nav_menu_links{
-        right: calc(0px - var(--Desktop-Page-Padding));
-    }
+    
 }

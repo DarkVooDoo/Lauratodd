@@ -1,4 +1,4 @@
-import { CookieAdvancedTypes, ProdDayTypes } from "./types"
+import { CookieAdvancedTypes } from "./types"
 
 class Machine {
     public allCookies: CookieAdvancedTypes[]
@@ -16,7 +16,7 @@ class Machine {
 
     init = ()=>{
         try {
-            this.CookieCalculation(0)
+            this.GetCookieNeeded(0)
             return this.list
         } catch (error) {
             console.log(error)
@@ -57,14 +57,14 @@ class Machine {
         if(this.machine.length === 1){
             const machineMatchup = this.GetSecondCookieForTheMachine(this.machine[0])
             const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
-            this.CookieNeeds([cookieSelection], currentDay)
+            this.CookieAskedUntilDay([cookieSelection], currentDay)
 
             this.machine.push(cookieSelection)
         }else if(this.machine.length === 0){
             const cookieMostNeeded = this.allCookies.filter(cookie=>cookie.cookie_ismachine).sort(this.sortByPercentageNeeds)[0]
             const machineMatchup = this.GetSecondCookieForTheMachine(cookieMostNeeded)
             const cookieSelection = machineMatchup.sort(this.sortByPercentageNeeds)[0]
-            this.CookieNeeds([cookieSelection, cookieMostNeeded], currentDay)
+            this.CookieAskedUntilDay([cookieSelection, cookieMostNeeded], currentDay)
             this.machine.push(cookieMostNeeded, cookieSelection)
         }
         
@@ -113,7 +113,7 @@ class Machine {
         this.list.push(machineMap.concat(handMap))
     }
             
-    private CookieCalculation = (day: number):()=>void =>{
+    private GetCookieNeeded = (day: number):()=>void =>{
         if(day > 4) return ()=>{}
         const cookieDayList: CookieAdvancedTypes[] = []
         for(const cookie of this.sheetData){
@@ -133,7 +133,7 @@ class Machine {
             }
         }
         this.createDay(cookieDayList, day)
-        return this.CookieCalculation(day + 1)
+        return this.GetCookieNeeded(day + 1)
             
     }
 
@@ -144,18 +144,11 @@ class Machine {
 
     }
 
-    private CookieAsked = (cookie: any[], currentPosition: number, end: number, result: number[]):number[]=>{
-        if(end === currentPosition) return result
-        return this.CookieAsked(cookie, currentPosition + 1, end, result)
-    }
-
     private GetSecondCookieForTheMachine = (selectedCookie: CookieAdvancedTypes)=>{
         if(selectedCookie.cookie_isendchain){
             return this.allCookies.filter(cookie=>selectedCookie.category_family === cookie.category_family && selectedCookie.cookie_id !== cookie.cookie_id && selectedCookie.cookie_isendchain !== cookie.cookie_isendchain)
-        }else{
-            return this.allCookies.filter(cookie=>selectedCookie.category_family === cookie.category_family && selectedCookie.cookie_id !== cookie.cookie_id)
-
         }
+        return this.allCookies.filter(cookie=>selectedCookie.category_family === cookie.category_family && selectedCookie.cookie_id !== cookie.cookie_id)
     }
 
     private CalculateWeight = (cookie: CookieAdvancedTypes)=>{
@@ -166,15 +159,14 @@ class Machine {
         return [kilos, piecesAmount]
     }
 
-    private CookieNeeds = (allCookies: CookieAdvancedTypes[], currentDay: number)=>{
+    private CookieAskedUntilDay = (allCookies: CookieAdvancedTypes[], lastDay: number)=>{
         for(const selectedCookie of allCookies){
             for(const cookie of this.sheetData){
                 const id = cookie[process.env.NODE_ENV === "development" ? cookie.length - 2 : cookie.length - 1]
                 if(id === selectedCookie.cookie_id){
                     const cookieDayByDay = cookie.slice(1, cookie.length - 2)
-                    const weekNeeds = cookieDayByDay.reduce((total, curr)=>total + parseInt(curr), 0)
                     let sommeAsked = 0
-                    for(let i = 0; i < currentDay + 1; i++){
+                    for(let i = 0; i < lastDay + 1; i++){
                         sommeAsked += cookieDayByDay[i] * selectedCookie.cookie_packaging
                     }
                     selectedCookie.sommeAsked = sommeAsked

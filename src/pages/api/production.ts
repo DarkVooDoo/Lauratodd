@@ -1,7 +1,7 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { CalculateProduction, GetProductionData } from '@/models/production.model'
+import { SaveProduction, GetProductionData } from '@/models/production.model'
 import { ApiDefaultResponseTypes, CookieTypes, DropdownTypes, RoomTypes } from '@/helpers/types'
 
 type Data = {
@@ -21,7 +21,7 @@ const ProductionAPI = async (req: NextApiRequest, res: NextApiResponse<Data | Ap
         }
     }else if(req.method === "PUT"){
         try{
-            await CalculateProduction(req.body)
+            await SaveProduction(req.body)
             res.status(200).send({status: "Success"})
         }catch(e){
             res.status(400).send({status: "Failed"})
